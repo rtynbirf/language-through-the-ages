@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Язык сквозь эпохи · Language Through the Ages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0E1011;
+    --surface: #16181B;
+    --surface-2: #1C1F23;
+    --text: #D4D0C8;
+    --text-dim: #8A8680;
+    --text-faint: #4A4843;
+    --gold: #C6A85B;
+    --gold-dim: #8B7A44;
+    --gold-faint: rgba(198,168,91,0.08);
+    --sans: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Reading progress bar ── */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--gold);
+    width: 0%;
+    z-index: 200;
+    transition: width 0.1s linear;
+    opacity: 0.7;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(14,16,17,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--surface-2);
+    padding: 14px 24px;
+  }
+
+  .header-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .site-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+
+  .epoch-nav {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .epoch-nav a {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--text-faint);
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 2px;
+    transition: color 0.25s, background 0.25s;
+  }
+
+  .epoch-nav a:hover,
+  .epoch-nav a.active {
+    color: var(--gold);
+    background: var(--gold-faint);
+  }
+
+  /* ── Intro ── */
+  .intro {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 24px 56px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.8s ease forwards 0.15s;
+  }
+
+  .intro-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .intro h1 {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(30px, 4.5vw, 44px);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+
+  .intro h1 em {
+    font-style: italic;
+    color: var(--gold-dim);
+  }
+
+  .intro-sub {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(17px, 1.6vw, 20px);
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.65;
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+
+  .intro-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    color: var(--text-faint);
+    line-height: 1.8;
+  }
+
+  /* ── Epoch section ── */
+  .epoch {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 56px 24px 72px;
+    border-top: 1px solid var(--surface-2);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .epoch.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .epoch-header {
+    margin-bottom: 32px;
+  }
+
+  .epoch-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .epoch-title {
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .epoch-period {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-faint);
+  }
+
+  .epoch-body {
+    font-size: clamp(16.5px, 0.35vw + 15px, 18.5px);
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+
+  .epoch-body p {
+    margin-bottom: 1.35em;
+  }
+
+  .epoch-body p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .epoch-aphorism {
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid var(--surface-2);
+    font-size: clamp(16.5px, 0.45vw + 15px, 19px);
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1.5;
+    text-align: center;
+    position: relative;
+  }
+
+  .epoch-aphorism::before {
+    content: '\2014';
+    display: block;
+    margin-bottom: 12px;
+    color: var(--gold-dim);
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 4px;
+  }
+
+  /* ── Font assignments by epoch ── */
+
+  /* I. Antiquity — Cardo */
+  #epoch-1 .epoch-title,
+  #epoch-1 .epoch-body,
+  #epoch-1 .epoch-aphorism {
+    font-family: 'Cardo', 'Times New Roman', serif;
+  }
+  #epoch-1 .epoch-body { font-style: italic; }
+
+  /* II. Middle Ages — Unifraktur title + EB Garamond body */
+  #epoch-2 .epoch-title {
+    font-family: 'UnifrakturCook', 'Times New Roman', serif;
+    font-size: clamp(26px, 3.2vw, 34px);
+    letter-spacing: 0.5px;
+  }
+  #epoch-2 .epoch-body,
+  #epoch-2 .epoch-aphorism {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+  }
+
+  /* III. Early Modern — EB Garamond */
+  #epoch-3 .epoch-title,
+  #epoch-3 .epoch-body,
+  #epoch-3 .epoch-aphorism {
+    font-family: 'EB Garamond', Georgia, serif;
+  }
+  #epoch-3 .epoch-body { font-style: italic; }
+
+  /* IV. Enlightenment — Libre Baskerville */
+  #epoch-4 .epoch-title,
+  #epoch-4 .epoch-body,
+  #epoch-4 .epoch-aphorism {
+    font-family: 'Libre Baskerville', Georgia, serif;
+  }
+  #epoch-4 .epoch-body {
+    font-style: italic;
+    font-size: clamp(15.5px, 0.3vw + 14.5px, 17.5px);
+    line-height: 1.85;
+  }
+
+  /* V. 19th century — Source Serif 4 */
+  #epoch-5 .epoch-title,
+  #epoch-5 .epoch-body,
+  #epoch-5 .epoch-aphorism {
+    font-family: 'Source Serif 4', Georgia, serif;
+  }
+  #epoch-5 .epoch-body { font-style: italic; }
+
+  /* VI. 20th century — Cormorant Garamond */
+  #epoch-6 .epoch-title,
+  #epoch-6 .epoch-body,
+  #epoch-6 .epoch-aphorism {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  #epoch-6 .epoch-body { font-style: italic; }
+
+  /* VII. 21st century — Inter */
+  #epoch-7 .epoch-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.2px;
+  }
+  #epoch-7 .epoch-body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: clamp(15.5px, 0.3vw + 14.5px, 17px);
+    line-height: 1.75;
+  }
+  #epoch-7 .epoch-aphorism {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 24px 72px;
+    border-top: 1px solid var(--surface-2);
+    text-align: center;
+  }
+
+  .site-footer p {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--text-faint);
+    line-height: 1.9;
+  }
+
+  .back-to-top {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-faint);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--surface-2);
+    border-radius: 2px;
+    transition: color 0.25s, border-color 0.25s;
+  cursor: pointer;
+    background: none;
+  }
+
+  .back-to-top:hover {
+    color: var(--gold-dim);
+    border-color: var(--gold-dim);
+  }
+
+  /* ── Ghost rail (side navigation) ── */
+  .ghost-rail {
+    display: none;
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0.13;
+    transition: opacity 0.35s ease;
+    z-index: 40;
+  }
+
+  @media (min-width: 1100px) {
+    .ghost-rail { display: flex; }
+  }
+
+  .ghost-rail:hover { opacity: 0.9; }
+
+  .ghost-rail a {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    text-decoration: none;
+    padding: 3px 8px;
+    text-align: right;
+    transition: color 0.2s;
+    border-right: 2px solid transparent;
+  }
+
+  .ghost-rail a:hover,
+  .ghost-rail a.active {
+    color: var(--gold);
+    border-right-color: var(--gold-dim);
+  }
+
+  /* ── Keyframes ── */
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .ghost-rail { transition: none; opacity: 0.4; }
+    .epoch-nav a { transition: none; }
+    .epoch { transition: none; opacity: 1; transform: none; }
+    .intro { animation: none; opacity: 1; transform: none; }
+    .progress-bar { transition: none; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .header-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .epoch-nav { justify-content: flex-start; }
+    .intro { padding-top: 40px; }
+    #epoch-2 .epoch-title {
+      font-size: clamp(22px, 6vw, 28px);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="site-title">Language Through the Ages</div>
+    <nav class="epoch-nav" aria-label="Навигация по эпохам">
+      <a href="#epoch-1">I</a>
+      <a href="#epoch-2">II</a>
+      <a href="#epoch-3">III</a>
+      <a href="#epoch-4">IV</a>
+      <a href="#epoch-5">V</a>
+      <a href="#epoch-6">VI</a>
+      <a href="#epoch-7">VII</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="ghost-rail" aria-label="Нить эпох">
+  <a href="#epoch-1">I</a>
+  <a href="#epoch-2">II</a>
+  <a href="#epoch-3">III</a>
+  <a href="#epoch-4">IV</a>
+  <a href="#epoch-5">V</a>
+  <a href="#epoch-6">VI</a>
+  <a href="#epoch-7">VII</a>
+</nav>
+
+<section class="intro">
+  <div class="intro-label">философско-лингвистическое эссе</div>
+  <h1>Язык сквозь<br><em>эпохи</em></h1>
+  <p class="intro-sub">Семь эпох языковой мысли — каждая своими словами и своим шрифтом.</p>
+  <p class="intro-note">текст говорит языком эпохи<br>шрифт тоже</p>
+</section>
+
+<section class="epoch" id="epoch-1">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха I · Cardo</div>
+    <h2 class="epoch-title">Античность: логос и природа имени</h2>
+    <div class="epoch-period">VIII в. до н.э. — V в. н.э.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Древние эллины полагали, что речь человека не есть нечто произвольное: она либо тянется от самой природы вещей, либо устанавливается людьми через соглашение. В диалоге Платона «Кратил» герменевты спорят: даны ли имена от природы, так что каждая вещь носит верное имя по своему естеству, или же люди наложили имена по своему усмотрению, как налагают клеймо на сосуд? Гераклит ещё раньше утверждал, что логос — общий для всех — уподобляется вечному огню, мерно вспыхивающему и мерно угасающему. Логос для досократиков — не слово в нашем смысле, но первоосновное начало, которому подчинено всё сущее.</p>
+    <p>Аристотель в трактате «Об истолковании» положил, что звуки голоса суть знаки аффектов души, а письмена — знаки звуков голоса. Но аффекты души — те же у всех, а звуки — различны в зависимости от народа. Таким образом, античная мысль установила тройное соответствие: вещь — страсть души — голос — буква. Стоики развили это учение: они различали лектон, то есть сказуемое содержание, от самого звука. Голос пропадает, лектон остаётся — так стоики впервые разделили то, что произносится, от того, что мыслится.</p>
+    <p>Риторика и диалектика составляли два главных искусства слова. Риторика учила убеждать в суде и в народном собрании, диалектика — вести спор посредством вопросов и ответов. И то, и другое опирались на топос, общие места, из которых черпаются доводы. Слово было не инструментом передачи мыслей, но действием, способным менять душу слушателя. Софисты первыми поняли, что слово может быть сильнее меча, и за это Платон не простил им до конца своих дней.</p>
+  </div>
+  <p class="epoch-aphorism">Слова суть подражания вещам — или по природе, или по установлению.</p>
+</section>
+
+<section class="epoch" id="epoch-2">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха II · UnifrakturCook + EB Garamond</div>
+    <h2 class="epoch-title">Средние века: знак, отпечаток и воля Творца</h2>
+    <div class="epoch-period">V — XV вв.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Когда христианское откровение стало главной опорой мысли, вопрос о языке переместился из сферы природы в сферу воли. Блаженный Августин в трактате «О учителе» положил, что слова суть знаки, указывающие на вещи, но сами по себе они лишь побуждают душу обратиться к вещам, которые она уже знает. Никто не учит через слова, если душа не имеет внутри себя того, к чему слова лишь прикасаются. Это замечание сделало средневековую мысль глубоко интроспективной: язык стал рассматриваться как движение души, ищущей вещь в самой себе.</p>
+    <p>Схоласты построили грандиозное учение о знаке. Знак, по их определению, есть нечто, что сверх своей собственной формы явно понуждает душу к познанию чего-то иного. Фома Аквинский разделил знаки на естественные, которые суть следы вещей (как дым от огня), и намеренные, которые человек ставит ради указания. Модисты — философы грамматики — развили учение о способах означивания, модусах сигнификации, которые присущи каждому слову и делают его способным означивать. Они верили, что грамматические категории отражают реальные свойства вещей, так что структура латинской речи отражает устройство бытия.</p>
+    <p>Особое место занимал спор об универсалиях: существуют ли общие имена в вещах, лишь в уме, или отдельно от того и другого? Реалисты утверждали, что род и вид имеют подлинное бытие; номиналисты, от Росцелина до Оккама, настаивали, что лишь единичные вещи реальны, а общие имена — лишь flatus vocis, дыхание голоса. Этот спор определил всю средневековую философию языка: имя стало полем битвы между онтологией и логикой, между верой в реальность общих понятий и радикальным эмпиризмом.</p>
+  </div>
+  <p class="epoch-aphorism">Слова суть знаки, побуждающие душу к познанию того, что она уже хранит.</p>
+</section>
+
+<section class="epoch" id="epoch-3">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха III · EB Garamond</div>
+    <h2 class="epoch-title">Раннее Новое время: от голоса к разуму</h2>
+    <div class="epoch-period">XV — XVII вв.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Когда рукопечатные книги стали распространяться по Европе, латынь утратила монополию на учёную речь. Лоренцо Валла в XV веке доказал, что изящная латынь Цицерона не есть язык церкви, и что каждый народ имеет право говорить и мыслить на своём наречии. Этьен Доле перевёл Платона на французский и заявил, что философия не нуждается в латыни, если мысль ясна. Так началось великое расслоение: язык стал одновременно объектом гордости национальной и инструментом познания всеобщего.</p>
+    <p>Фрэнсис Бэкон в «Новом Органоне» провозгласил, что слова, как правило, искажают мысль: они навязывают разуму ложные сходства и мешают созерцанию природы. Язык, по Бэкону, — идолы площади, общие заблуждения, коренящиеся в словах. Декарт в «Размышлениях» пошёл дальше: он усомнился в том, что слова вообще способны выражать мысль адекватно, и потому искал всеобщую науку, построенную на ясных идеях, а не на словах. Лейбниц, напротив, верил, что можно построить универсальную характеристику — искусственный язык, в котором каждый знак будет однозначно соответствовать простой идее, и тогда всякий спор разрешится путём исчисления.</p>
+    <p>Джон Локк в «Опыте о человеческом разумении» положил, что слова суть чувственно воспринимаемые знаки идей, а идеи — то, что душа обнаруживает внутри себя при размышлении. Слова не обозначают вещи непосредственно, но лишь постольку, поскольку они суть знаки идей в голове говорящего. Общность языка покоится не на сходстве имён с вещами, но на том, что люди произвольно соединяют определённые звуки с определёнными идеями. Локк первым чётко разделил значение слова (идея) и вещь, к которой оно отсылает, и этим навсегда изменил вопрос о языке.</p>
+  </div>
+  <p class="epoch-aphorism">Слова суть чувственно воспринимаемые знаки внутренних идей.</p>
+</section>
+
+<section class="epoch" id="epoch-4">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха IV · Libre Baskerville</div>
+    <h2 class="epoch-title">Просвещение: чувство, разум и происхождение речи</h2>
+    <div class="epoch-period">XVIII в.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Век разума обратился к вопросу, которого древние почти не касались: как зародилась речь? Этьен Бонно де Кондильяк в «Опыте о происхождении человеческих знаний» предположил, что язык родился из естественных жестов и криков. Два детей, растущие в одиночестве, начнут с мимики и возгласов, затем перейдут к произвольным знакам, а оттуда — к языку. Кондильяк утверждал, что язык не был изобретён раз и навсегда, но развивался постепенно, подобно тому как ребёнок учится говорить. Анализ и метод — вот инструменты, благодаря которым язык совершенствовался от грубых криков к сложным конструкциям.</p>
+    <p>Жан-Жак Руссо в «Рассуждении о происхождении и основаниях неравенства» и в «Опыте о происхождении языков» утверждал нечто иное: первые языки были не аналитическими, но певучими, наполненными страстью и образами. Прежде чем человек стал доказывать, он пел; прежде чем рассуждать, он чувствовал. По Руссо, потребность породила первые жесты, а страсть — первые слова. Иоганн Готфрид Гердер в трактате «О происхождении языка» пошёл ещё дальше: он отверг как божественное откровение, так и чисто рассудочное изобретение. Язык, по Гердеру, — медленно выработанное средство познания, тесно связанное с чувственным опытом и с сознательной деятельностью человека.</p>
+    <p>Просвещение создало общую грамматику — учение о всеобщих принципах, лежащих в основе каждого языка. Грамматисты Порт-Рояля утверждали, что всякая Proposition, то есть суждение, состоит из субъекта, атрибута и связки, и что эта структура отражает саму структуру мысли. Они полагали, что грамматические категории суть не произвольные условности, но необходимые формы, в которых разум артикулирует свои идеи. Эта вера в универсальную логику речи определила всю последующую лингвистику вплоть до XX века.</p>
+  </div>
+  <p class="epoch-aphorism">Страстям мы обязаны первыми словами, а потребностям — первыми жестами.</p>
+</section>
+
+<section class="epoch" id="epoch-5">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха V · Source Serif 4</div>
+    <h2 class="epoch-title">XIX век: родство языков и дух народа</h2>
+    <div class="epoch-period">XIX в.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Когда Франц Бопп в 1816 году опубликовал «Сравнительное спряжение», он доказал, что санскрит, латинский, греческий, германские и кельтские языки восходят к общему предку. Это открытие изменило всё: язык перестал быть лишь орудием мысли и стал историческим памятником, живым свидетелем перемещений народов. Якоб Гримм сформулировал свой знаменитый закон о чередовании согласных, и сравнительное языкознание превратилось в строгую дисциплину, способную восстанавливать формы, которые никогда не были записаны.</p>
+    <p>Вильгельм фон Гумбольдт в сочинении «О различии строения человеческих языков» высказал мысль, что язык не есть продукт, но деятельность. Каждый язык есть органическое целое, обладающее внутренней формой — особым способом, которым народ членит мир и придаёт ему словесную плоть. Дух народа и его язык нераздельны: язык есть орган внутреннего, а не внешнего бытия народа. Гумбольдт утверждал, что изучать язык — значит не описывать его правила, но постигать мировоззрение народа, им владеющего.</p>
+    <p>В России Александр Афанасьевич Потебня развивал идеи Гумбольдта: он утверждал, что слово есть не знак вещи, а средство создания образа. Слово делится на внешнюю форму, звучание, и внутреннюю, его значение, причём внутренняя форма есть образ, посредством которого народ понимает сущность вещи. Эта мысль стала основой русской лингвистической традиции и одновременно питала литературную критику и поэтику. Язык в XIX веке впервые предстал не как инструмент, но как существо, живущее по собственным законам, растущее и ветвящееся подобно дереву.</p>
+  </div>
+  <p class="epoch-aphorism">Язык не есть продукт деятельности, но сама деятельность духа.</p>
+</section>
+
+<section class="epoch" id="epoch-6">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха VI · Cormorant Garamond</div>
+    <h2 class="epoch-title">XX век: знак, система и порождающее устройство</h2>
+    <div class="epoch-period">XX в.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Фердинанд де Соссюр в Женевских лекциях совершил переворот, равного которому лингвистика не знала со времён Аристотеля. Он разделил язык на две неравные части: язык как систему знаков и речь как индивидуальный акт. Язык существует в коллективе и не зависит от воли говорящего; речь есть осуществление этой системы в конкретном высказывании. Знак, по Соссюру, состоит из означающего и означаемого, и связь между ними произвольна. Это значит: нет никакого естественного родства между звуком и смыслом — оно установлено обществом.</p>
+    <p>Соссюр также разделил изучение языка на синхронию и диахронию: первая рассматривает систему в данный момент, вторая — её изменения во времени. Он утверждал, что синхрония должна предшествовать диахронии, так как говорящий не сознаёт исторических изменений. Значение каждого знака определяется не его собственной природой, но его положением в системе, его отношением к другим знакам. Лингвистика стала наукой о системах: языки — как кристаллы, каждый с собственной структурой, каждый — целое по своим правилам.</p>
+    <p>Во второй половине века Ноам Хомский превратил лингвистику в раздел когнитивной науки. Он предложил различать компетенцию, знание языка, и употребление, то есть практическое владение. Компетенция описывается порождающей грамматикой — конечным набором правил, способным производить бесконечное множество предложений. Глубинная структура предложения, его подлинная форма, трансформируется в поверхностную посредством правил перестановки, удаления и вставки. Хомский доказал, что ребёнок способен усвоить язык лишь потому, что врождённые структуры мозга уже содержат универсальную грамматику.</p>
+  </div>
+  <p class="epoch-aphorism">Язык — это система знаков, выражающих идеи.</p>
+</section>
+
+<section class="epoch" id="epoch-7">
+  <div class="epoch-header">
+    <div class="epoch-number">Эпоха VII · Inter</div>
+    <h2 class="epoch-title">Конец XX — XXI век: тело, мозг и предсказание</h2>
+    <div class="epoch-period">конец XX — начало XXI в.</div>
+  </div>
+  <div class="epoch-body">
+    <p>Когнитивная революция 1970–1980-х годов вернула языку его тело. Джордж Лакофф в книге «Женщины, огонь и опасные вещи» доказал, что человеческие категории строятся не по формальной логике, но на основе телесного опыта, метафор и прототипов. Мы не мыслим абстрактными символами — мы мыслим телом. Понятия — аргумент, время, состояние — понимаются через метафоры: спора как войны, времени как движения, состояния как контейнера. Эти метафоры не украшение речи, а основа мышления, коренящаяся в том, как наше тело взаимодействует с миром.</p>
+    <p>Одновременно нейробиология показала, что язык не локализован в одной зоне мозга, но распределён по обширным сетям. Антонио Дамасио выдвинул гипотезу соматического маркера: каждое решение, каждое высказывание сопровождается телесным ощущением, которое направляет выбор слов и конструкций. Лиза Фельдман Барретт показала, что эмоции не есть врождённые реакции, но предсказания мозга, основанные на интероцепции — непрерывном считывании состояния тела. Язык, следовательно, есть не кодирование мыслей в звуки, а непрерывное действие тела, стремящегося минимизировать разницу между ожиданием и ощущением.</p>
+    <p>Карл Фристон сформулировал принцип свободной энергии: мозг постоянно строит модель мира и обновляет её, чтобы предсказывать входящие сигналы. Язык в этой картине — не средство передачи информации, а один из каналов, через который мозг снижает неопределённость. Говорящий не кодирует готовую мысль в слова — он совершает телесное действие, направленное на изменение состояний другого тела. Слушающий не декодирует слова — он использует их как сигналы для обновления собственной предиктивной модели. Язык вернулся к тому, с чего начинал у Гераклита: он есть действие, событие, развертывающееся между телами, а не вещь, которую можно передать из головы в голову.</p>
+  </div>
+  <p class="epoch-aphorism">Язык есть не код, но действие тела, направленное на другой мир.</p>
+</section>
+
+<footer class="site-footer">
+  <p>
+    Language Through the Ages<br>
+    семь эпох · семь шрифтов · без анахронизмов<br>
+    2026
+  </p>
+  <a href="#" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">наверх ↑</a>
+</footer>
+
+<script>
+  (function () {
+    /* ── IntersectionObserver: active nav + epoch fade-in ── */
+    var sections = document.querySelectorAll('.epoch');
+    var navLinks = document.querySelectorAll('.epoch-nav a, .ghost-rail a');
+    var progressBar = document.getElementById('progressBar');
+
+    if (!('IntersectionObserver' in window)) {
+      /* Fallback: show all epochs immediately */
+      sections.forEach(function (s) { s.classList.add('visible'); });
+      return;
+    }
+
+    /* Observer for nav highlighting */
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          navLinks.forEach(function (link) {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '-12% 0px -55% 0px'
+    });
+
+    /* Observer for fade-in animation */
+    var fadeObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    sections.forEach(function (section) {
+      navObserver.observe(section);
+      fadeObserver.observe(section);
+    });
+
+    /* ── Reading progress bar ── */
+    var body = document.body;
+    var html = document.documentElement;
+    var scrollHeight, winHeight;
+
+    function updateProgress() {
+      scrollHeight = Math.max(body.scrollHeight, body.offsetHeight,
+                             html.clientHeight, html.scrollHeight, html.offsetHeight);
+      winHeight = window.innerHeight;
+      var scrolled = window.scrollY;
+      var total = scrollHeight - winHeight;
+      var pct = total > 0 ? (scrolled / total) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () {
+          updateProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateProgress();
+  })();
+</script>
+
+</body>
+</html>
