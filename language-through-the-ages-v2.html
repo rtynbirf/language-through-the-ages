@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0D0C0A">
+<meta name="description" content="Эссе о семи исторических способах мыслить язык: от спора о природе имён до телесного предсказания. Каждая эпоха говорит своим словарём и своим шрифтом; эпистемические комментарии отделяют историю от интерпретации.">
+<title>Язык сквозь эпохи — семь способов мыслить язык</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=UnifrakturCook:wght@700&family=EB+Garamond:ital,wght@0,400..800;1,400..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..600&family=Cormorant+Garamond:ital,wght@0,300..700;1,400..600&family=Inter:ital,wght@0,300..700;1,300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0D0C0A;
+  --bg-soft:#14120F;
+  --bg-card:#181613;
+  --line:rgba(201,196,184,.14);
+  --text:#E9E5DC;
+  --text-dim-soft:#BCB7AD;
+  --text-dim:#9A9690;
+  --text-faint:#6E6B65;
+  --gold:#C8A44D;
+  --gold-dim:rgba(200,164,77,.35);
+  --rust:#C0704F;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'EB Garamond',Georgia,serif;
+  font-size:19px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--gold-dim);color:var(--text)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.skip-link{position:fixed;top:-48px;left:16px;z-index:300;background:var(--bg-card);border:1px solid var(--line);color:var(--text-dim-soft);padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;text-decoration:none;transition:top .2s ease}
+.skip-link:focus{top:12px}
+.progress-bar{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),#E5C97A);z-index:200;pointer-events:none}
+.site-header{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);background:rgba(13,12,10,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:100}
+.brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;white-space:nowrap}
+.brand b{color:var(--gold);font-weight:500}
+.epoch-nav{display:flex;gap:4px;overflow-x:auto}
+.epoch-nav a{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);text-decoration:none;padding:6px 9px;border-radius:4px;border:1px solid transparent;flex:none}
+.epoch-nav a:hover{color:var(--text);border-color:var(--line)}
+.epoch-nav a.is-active{color:var(--gold);border-color:var(--gold-dim)}
+.ghost-rail{position:fixed;right:clamp(12px,2.4vw,28px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:90}
+.ghost-rail a{font-family:'Cardo',serif;font-size:15px;color:var(--text-faint);text-decoration:none;line-height:1;padding:2px 6px;border-right:1px solid transparent}
+.ghost-rail a:hover{color:var(--text-dim-soft)}
+.ghost-rail a.is-active{color:var(--gold)}
+main{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,32px)}
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding-top:64px}
+.hero-over{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.hero-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(52px,9vw,96px);line-height:1.02;margin:18px 0 22px;letter-spacing:.01em}
+.hero-sub{font-size:clamp(20px,2.6vw,25px);color:var(--text-dim-soft);font-style:italic;max-width:34em}
+.hero-note{margin-top:40px;padding:22px 24px;border:1px solid var(--line);border-left:2px solid var(--gold);background:var(--bg-soft);font-size:16.5px;color:var(--text-dim);max-width:46em;border-radius:2px}
+.hero-note b{color:var(--text-dim-soft);font-weight:600}
+.hero-scroll{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-faint)}
+.epoch{padding:110px 0 90px;border-top:1px solid var(--line);opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.epoch.visible{opacity:1;transform:translateY(0)}
+.epoch-meta{display:flex;align-items:baseline;gap:16px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint);margin-bottom:26px}
+.epoch-meta .num{font-family:'Cardo',serif;font-size:40px;color:var(--gold);letter-spacing:0;line-height:1;text-transform:none}
+.epoch-title{font-weight:400;font-size:clamp(38px,6vw,56px);line-height:1.05;margin-bottom:10px}
+.epoch-voice{font-style:italic;color:var(--text-dim-soft);font-size:19px;margin-bottom:6px}
+.epoch-aphorism{font-size:clamp(22px,3vw,27px);line-height:1.4;color:var(--text);margin:34px 0;font-style:italic}
+.epoch-aphorism::before{content:'\2014';color:var(--gold);margin-right:10px;font-style:normal}
+.epoch-body p{margin:0 0 1.15em;color:var(--text-dim-soft);font-size:19.5px}
+.shadow-mark{font-style:normal;font-weight:600;color:var(--rust)}
+.epoch-lexis{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;color:var(--text-dim)}
+.epoch-lexis .label{color:var(--text-faint);letter-spacing:.14em;text-transform:uppercase;margin-right:8px}
+.epoch-comment{margin-top:28px;padding:20px 22px;border:1px solid var(--line);background:var(--bg-card);border-radius:2px;font-size:15.5px;line-height:1.65;color:var(--text-dim)}
+.epoch-comment .c-label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.epoch-comment b{color:var(--text-dim-soft);font-weight:600}
+/* голоса эпох */
+#epoch-1 .epoch-title,#epoch-1 .epoch-voice,#epoch-1 .epoch-aphorism,#epoch-1 .epoch-body{font-family:'Cardo','EB Garamond',Georgia,serif}
+#epoch-1 .epoch-body p{font-size:20px}
+#epoch-2 .epoch-title,#epoch-2 .epoch-voice{font-family:'EB Garamond',Georgia,serif}
+#epoch-2 .epoch-aphorism{font-family:'UnifrakturCook','EB Garamond',Georgia,serif}
+#epoch-2 .epoch-body{font-family:'EB Garamond',Georgia,serif}
+#epoch-3 .epoch-title,#epoch-3 .epoch-voice,#epoch-3 .epoch-aphorism,#epoch-3 .epoch-body{font-family:'EB Garamond',Georgia,serif}
+#epoch-4 .epoch-title,#epoch-4 .epoch-voice,#epoch-4 .epoch-aphorism,#epoch-4 .epoch-body{font-family:'Libre Baskerville','Source Serif 4',Georgia,serif}
+#epoch-4 .epoch-body p{font-size:17.5px;line-height:1.75}
+#epoch-5 .epoch-title,#epoch-5 .epoch-voice,#epoch-5 .epoch-aphorism,#epoch-5 .epoch-body{font-family:'Source Serif 4',Georgia,serif}
+#epoch-5 .epoch-body p{font-size:18.5px}
+#epoch-6 .epoch-title,#epoch-6 .epoch-voice,#epoch-6 .epoch-aphorism,#epoch-6 .epoch-body{font-family:'Cormorant Garamond',Georgia,serif}
+#epoch-6 .epoch-body p{font-size:20.5px;font-weight:500}
+#epoch-6 .epoch-aphorism{font-weight:500}
+#epoch-7 .epoch-title,#epoch-7 .epoch-voice,#epoch-7 .epoch-aphorism,#epoch-7 .epoch-body{font-family:'Inter',system-ui,sans-serif}
+#epoch-7 .epoch-body p{font-size:16.5px;line-height:1.7}
+#epoch-7 .epoch-title{font-weight:600;letter-spacing:-.01em}
+/* финальная таблица */
+.mirror{padding:110px 0 90px;border-top:1px solid var(--line)}
+.mirror .m-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.mirror h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(34px,5vw,48px);line-height:1.1;margin:14px 0 18px}
+.mirror-intro p{color:var(--text-dim);font-size:17.5px;max-width:44em}
+.table-scroll{overflow-x:auto;margin-top:34px}
+.epoch-table{width:100%;border-collapse:collapse;min-width:640px}
+.epoch-table td{padding:20px 14px;border-top:1px solid var(--line);vertical-align:top}
+.epoch-table tr:first-child td{border-top:none}
+.epoch-table td:first-child{width:190px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);padding-top:24px}
+.epoch-table .t-voice{display:block;margin-top:6px;letter-spacing:.06em;font-style:normal}
+.epoch-table td:last-child{font-size:20px;color:var(--text-dim-soft);line-height:1.5}
+.epoch-table tr.r-1 td:last-child{font-family:'Cardo','EB Garamond',Georgia,serif;font-size:21px}
+.epoch-table tr.r-2 td:last-child{font-family:'EB Garamond',Georgia,serif;font-size:21px}
+.epoch-table tr.r-3 td:last-child{font-family:'EB Garamond',Georgia,serif;font-size:21px}
+.epoch-table tr.r-4 td:last-child{font-family:'Libre Baskerville','Source Serif 4',Georgia,serif;font-size:18px}
+.epoch-table tr.r-5 td:last-child{font-family:'Source Serif 4',Georgia,serif;font-size:19px}
+.epoch-table tr.r-6 td:last-child{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:500}
+.epoch-table tr.r-7 td:last-child{font-family:'Inter',system-ui,sans-serif;font-size:16.5px}
+.site-footer{border-top:1px solid var(--line);padding:64px 0 96px}
+.site-footer .f-line{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-style:italic;color:var(--text-dim-soft)}
+.site-footer .f-meta{margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint);line-height:2}
+.back-to-top{position:fixed;right:clamp(16px,3vw,36px);bottom:26px;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-dim);text-decoration:none;background:rgba(13,12,10,.85);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease,visibility .3s;z-index:120;font-size:18px;line-height:1}
+.back-to-top.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top:hover{color:var(--gold);border-color:var(--gold-dim)}
+@media (max-width:1099px){.ghost-rail{display:none}}
+@media (max-width:720px){
+  .epoch-nav a{padding:6px 6px;font-size:11px}
+  .site-header{height:56px}
+  html{scroll-padding-top:68px}
+  .epoch{padding:80px 0 70px}
+  .epoch-body p{font-size:18px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .epoch{opacity:1;transform:none;transition:none}
+  .back-to-top{transition:none}
+  .skip-link{transition:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#epoch-1">Перейти к эпохам</a>
+<div class="progress-bar" aria-hidden="true"></div>
+<header class="site-header">
+  <a class="brand" href="#top">Язык <b>сквозь эпохи</b></a>
+  <nav class="epoch-nav" aria-label="Навигация по эпохам">
+    <a href="#epoch-1" aria-label="Эпоха I — Античность">I</a>
+    <a href="#epoch-2" aria-label="Эпоха II — Средневековье">II</a>
+    <a href="#epoch-3" aria-label="Эпоха III — Раннее Новое время">III</a>
+    <a href="#epoch-4" aria-label="Эпоха IV — Просвещение">IV</a>
+    <a href="#epoch-5" aria-label="Эпоха V — Девятнадцатый век">V</a>
+    <a href="#epoch-6" aria-label="Эпоха VI — Двадцатый век">VI</a>
+    <a href="#epoch-7" aria-label="Эпоха VII — Двадцать первый век">VII</a>
+  </nav>
+</header>
+<nav class="ghost-rail" aria-hidden="true">
+  <a href="#epoch-1" tabindex="-1">I</a>
+  <a href="#epoch-2" tabindex="-1">II</a>
+  <a href="#epoch-3" tabindex="-1">III</a>
+  <a href="#epoch-4" tabindex="-1">IV</a>
+  <a href="#epoch-5" tabindex="-1">V</a>
+  <a href="#epoch-6" tabindex="-1">VI</a>
+  <a href="#epoch-7" tabindex="-1">VII</a>
+</nav>
+<main>
+<section class="hero" id="top">
+  <p class="hero-over">эссе · типографическая реконструкция</p>
+  <h1 class="hero-title">Язык сквозь эпохи</h1>
+  <p class="hero-sub">Семь влиятельных способов мыслить язык — от логоса к телесному предсказанию.</p>
+  <div class="hero-note">
+    <p>Перед вами не хроника, а эссе. Каждый из семи блоков говорит словарём своей эпохи — с осторожностью к тому, чего тогда ещё не могли сказать. <b>Эпистемический комментарий</b> в конце блока отделяет то, что известно, от того, что мы в эпоху вчитываем. <b>Шрифты</b> — современный жест, а не артефакты: происхождение каждого честно указано там же.</p>
+  </div>
+  <p class="hero-scroll">читайте по вертикали — или выберите эпоху в шапке</p>
+</section>
+<section class="epoch" id="epoch-1" aria-labelledby="epoch-1-title">
+  <div class="epoch-meta"><span class="num">I</span><span>V в. до н. э. — III в. н. э.</span><span>Античность</span></div>
+  <h2 class="epoch-title" id="epoch-1-title">Античность</h2>
+  <p class="epoch-voice">природа или договор</p>
+  <p class="epoch-aphorism">φύσις — или νόμος: имя дано вещью или уговорено людьми?</p>
+  <div class="epoch-body">
+    <p>На страницах «Кратила» Платон сталкивает двоих и не решает за них. Кратил настаивает: имя принадлежит вещи по природе — в его звуках вещь отзывается. Гермоген возражает: имя есть лишь то, как люди условились звать; поменялся бы уговор — и всё звучало бы иначе. Сократ ведёт спор к третьему пути, имени как подражанию сущности орудиями звука, но решения диалог не даёт: он заканчивается открыто — и в этой открытости, возможно, самое честное слово, сказанное об имени за всю историю вопроса.</p>
+    <p>Аристотель позже сжимает вопрос до формулы: имя — звук по уговору; природной связи нет. Стоики идут глубже и разводят три вещи: звук, означаемое и саму вещь. Означаемое — лектон — объявлено бестелесным: не звук и не предмет, а то, что схватывается умом между ними. У эпохи ещё не было отдельного слова для значения, но тройку она уже различала — и спорила, чем имя связано с вещью: естеством или уговором.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>логос · имя · природа · договор · знак · лектон</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> «Кратил» действительно не содержит решения; Аристотель и стоики говорят именно такими формулами. <b>Интерпретация:</b> линия «от спора к лектону» — наша композиция, а не их оглавление. <b>Шрифт:</b> Cardo (Дэвид Перри, 2011) — оцифровка ренессансного Бембо, пунсонов Франческо Гриффо, около 1495 года. Кириллицы в Cardo нет: русский текст говорит EB Garamond — как античность вообще доходит до нас в переводе.
+  </div>
+</section>
+<section class="epoch" id="epoch-2" aria-labelledby="epoch-2-title">
+  <div class="epoch-meta"><span class="num">II</span><span>IV — XV вв.</span><span>Средневековье</span></div>
+  <h2 class="epoch-title" id="epoch-2-title">Средневековье</h2>
+  <p class="epoch-voice">Слово, которое творит, — и слова, которые указывают</p>
+  <p class="epoch-aphorism">Verbum caro factum est — а человекам оставлены слова.</p>
+  <div class="epoch-body">
+    <p>Августин в «Об учителе» строит учение о знаках: слово — вещь, отсылающая к другой вещи; но ничему нельзя научиться одними словами, ибо учит не звук, а истина внутри; кто не знает вещей, не узнает их и из знаков.</p>
+    <p>Дальше весь спор — об общем. Существуют ли роды и виды сами по себе, как вещи, — или только в уме и на языке? Одни отвечают: общее прежде вещей, ибо оно мыслимо в Творце. Другие: существуют только отдельные вещи, а общее — имена. Абеляр ищет середину: универсалии не вещи и не пустые звуки — это значения, которые ум составляет из вещей. Оккам доводит мысль до экономии: не множить сущностей без нужды; общее — знак, а слово — знак знаков.</p>
+    <p><em class="shadow-mark">Тень эпохи.</em> Иерархия языков: латынь книжников — над «вульгарными» языками толпы; доступ к слову — доступ к власти, и безграмотное большинство получает значение только через посредников.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>signum · Слово · универсалия · род · вид · имя</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> «Об учителе» — 389 год; спор об универсалиях шёл именно по этой линии: Абеляр — концептуалист, Оккам — номиналист. <b>Интерпретация:</b> «слово — знак знаков» как итог века — наша компрессия. <b>Шрифт:</b> UnifrakturCook (Astigmatic, 2011) — цифровая фрактура; но фрактура расцвела лишь к XV–XVI векам, а кириллицы в ней нет: латиница говорит готикой, русский текст — гарамоном. Пусть это и будет комментарием в духе эпохи — язык власти и язык толпы, рядом.
+  </div>
+</section>
+<section class="epoch" id="epoch-3" aria-labelledby="epoch-3-title">
+  <div class="epoch-meta"><span class="num">III</span><span>XVI — XVII вв.</span><span>Раннее Новое время</span></div>
+  <h2 class="epoch-title" id="epoch-3-title">Раннее Новое время</h2>
+  <p class="epoch-voice">порядок мысли, положенный на звук</p>
+  <p class="epoch-aphorism">Говорить — значит представлять мысли знаками.</p>
+  <div class="epoch-body">
+    <p>В 1660 году в обители Пор-Рояль выходит «Всеобщая рациональная грамматика» Арно и Лансло. Замысел дерзок: за пестротой конкретных языков лежит единый порядок мышления, и грамматика обязана его показать. Значение — соединение представления со звуком; слова бывают предметы, образы и связи мысли. Даже предлоги и союзы получают здесь своё место: это знаки, которыми мысль скрепляет сама себя. Языки различаются не тем, что в них можно подумать, а тем, как мысль в них выстроена.</p>
+    <p>Век ищет совершенный знак и в другом смысле: академии упорядочивают национальные языки — Флоренция, затем Париж; словари фиксируют «правильное». Уилкинс в 1668 году пробует построить философский язык, где всякому знаку отведено место среди всех вещей. Тень эпохи здесь уже видна: та же жажда порядка нормирует язык сверху, и говор улиц и деревень остаётся вне письма.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>представление · знак · порядок · норма · всеобщая грамматика</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> «Грамматика» Пор-Рояля — 1660 год, философский язык Уилкинса — 1668-й, академии действительно нормировали речь. <b>Интерпретация:</b> «единый порядок мышления» — так мы подаём замысел авторов; сами они сказали бы о «разуме», и разница существенна. <b>Шрифт:</b> EB Garamond — свободная оцифровка пунсонов Клода Гарамона, около 1530 года. Единственный блок, где шрифт исторически почти точен: Пор-Рояль набирался именно такой гарнитурой.
+  </div>
+</section>
+<section class="epoch" id="epoch-4" aria-labelledby="epoch-4-title">
+  <div class="epoch-meta"><span class="num">IV</span><span>1690 — 1772</span><span>Просвещение</span></div>
+  <h2 class="epoch-title" id="epoch-4-title">Просвещение</h2>
+  <p class="epoch-voice">язык как договор употребления</p>
+  <p class="epoch-aphorism">Знаки властны лишь постольку, поскольку общи.</p>
+  <div class="epoch-body">
+    <p>Локк не первый заметил, что слова означают идеи, — но в «Опыте о человеческом разумении» (1690) эта мысль впервые становится центром философии языка. Слово — знак идеи в голове говорящего; от природы здесь ничего не зависит, вся сила знака — от употребления людей. Отсюда и тревога Локка: слова со смутными идеями — неиссякаемый источник споров, ибо каждый принимает свой смысл за общий.</p>
+    <p>Дальше эпоха спрашивает о происхождении. Кондильяк («Опыт о происхождении человеческих знаний», 1746) выводит язык из естественных знаков — жеста, восклицания, взгляда, — и видит в языке метод: думать — значит говорить себе в порядке. Руссо отвечает иначе: язык рождён из страсти, а не из нужды, и был сначала певучим. Гердер («Трактат о происхождении языка», 1772, работа отмечена Берлинской академией) сводит спор: язык — дело разума, который стал человеком.</p>
+    <p><em class="shadow-mark">Тень эпохи.</em> Договорную модель удобно присвоить тем, кто пишет нормы. Словари и грамматики века «улучшали» язык, вычищая провинциальное и простонародное: договор употребления заключался под надзором.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>идея · знак · употребление · происхождение · народ</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> даты точны: Локк — 1690, Кондильяк — 1746, Руссо — посмертная публикация, Гердер — 1772 и премия Берлинской академии. <b>Интерпретация:</b> «Локк — центр, а не начало» — поправка против мифа об отце-основателе; упрёк в надзоре — наша критика, эпоха сама бы её не узнала. <b>Шрифт:</b> Libre Baskerville (Мэттью Баттерик, 2010) — экранная интерпретация Баскервилля (Бирмингем, 1750-е). Современник эпохи — но отрисованный для монитора; кириллицы в нём нет, русский текст держит Source Serif.
+  </div>
+</section>
+<section class="epoch" id="epoch-5" aria-labelledby="epoch-5-title">
+  <div class="epoch-meta"><span class="num">V</span><span>1816 — ок. 1900</span><span>Девятнадцатый век</span></div>
+  <h2 class="epoch-title" id="epoch-5-title">Девятнадцатый век</h2>
+  <p class="epoch-voice">история, спящая в корне</p>
+  <p class="epoch-aphorism">Языки растут по своим законам, без участия воли.</p>
+  <div class="epoch-body">
+    <p>В 1816 году Франц Бопп публикует сравнение системы спряжения санскритского с греческим, латынью, персидским и германскими. Родство доказывают не похожие слова — похожие вводят в соблазн, — а система форм: совпадают окончания, значит, был единый язык, из которого все вышли. Шлейхер рисует генеалогическое древо и восстанавливает формы праязыка; такие формы помечают звёздочкой, ибо их нет ни в одной рукописи — это вывод, а не находка. Закон Гримма о передвижении согласных показывает: изменение звуков — не случайность, а правило с историей.</p>
+    <p><em class="shadow-mark">Тень эпохи.</em> Строгий метод быстро получает присвоение: к корням приплетают «кровь» и «расу», генеалогию языков превращают в генеалогию народов — и сравнительное языкознание, рождённое как наука о формах, вручает политике XIX–XX веков псевдонаучную печать. Учёным ещё предстояло долго отделять своё дело от этой славы.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>корень · родство · праязык · древо · закон</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> Бопп — 1816; закон Гримма — второе издание 1822 года; Шлейхер и звёздочки реконструкции — всё документировано. <b>Интерпретация:</b> «язык растёт без участия воли» — метафора Шлейхера, принятая здесь сознательно; органистическая биология его времени ошибалась сильнее, чем он. <b>Шрифт:</b> Source Serif 4 (Франк Грисхаммер, Adobe, 2014–2021) — цифровой шрифт по мотивам наборной традиции XIX века. Ни один текст эпохи так не выглядел; сказать это прямо — дешевле, чем притворяться.
+  </div>
+</section>
+<section class="epoch" id="epoch-6" aria-labelledby="epoch-6-title">
+  <div class="epoch-meta"><span class="num">VI</span><span>1916 — 1970-е</span><span>Двадцатый век</span></div>
+  <h2 class="epoch-title" id="epoch-6-title">Двадцатый век</h2>
+  <p class="epoch-voice">значение из различий</p>
+  <p class="epoch-aphorism">В языке нет ничего, кроме различий.</p>
+  <div class="epoch-body">
+    <p>«Курс общей лингвистики» выходит в 1916 году — посмертно, собранный Бальи и Сешае из студенческих записей: сам Соссюр книги не писал. Язык (langue) — система, существующая лишь в коллективе, абстракция, противопоставленная речи (parole) — отдельному употреблению. Значение слова рождается не из вещи и не из идеи, а из различий внутри системы: «отец» значит то, что «мать» — не то. Отсюда и смещение внимания: не история смены значений, а состояние системы, взятое в один момент.</p>
+    <p>Метод расходится по дисциплинам: фонология Трубецкого и Якобсона строит строгую науку о звуке; Леви-Стросс прикладывает структуру к родству и мифу; структура становится общим языком гуманитарных наук. <em class="shadow-mark">Тень эпохи.</em> Система, где всё держится различиями, плохо объясняет того, кто говорит. Критики упрекнут структурализм в растворении человека в системе: говорящий остаётся функцией. Этот спор определит вторую половину века.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>система · знак · означающее · различие · структура</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> посмертный характер «Курса» — факт; langue и parole действительно абстракции. <b>Интерпретация:</b> сведение века к одной формуле — наш жест; сам двадцатый век гораздо шумнее. <b>Шрифт:</b> Cormorant Garamond (Кристиан Тальман, 2015) — гарамон, перерисованный с острым контрастом для экрана. Шрифт XVI века с цифровой остротой — точная оптика для эпохи, доказывавшей произвольность знака.
+  </div>
+</section>
+<section class="epoch" id="epoch-7" aria-labelledby="epoch-7-title">
+  <div class="epoch-meta"><span class="num">VII</span><span>1957 — наши дни</span><span>Двадцать первый век</span></div>
+  <h2 class="epoch-title" id="epoch-7-title">Двадцать первый век</h2>
+  <p class="epoch-voice">тело, употребление, предсказание</p>
+  <p class="epoch-aphorism">Значение не в словаре — в теле, которое действует.</p>
+  <div class="epoch-body">
+    <p>Хомский выдвигает гипотезу универсальной грамматики: ребёнок осваивает язык слишком быстро и слишком одинаково, чтобы объяснить это одним опытом, — значит, строение языка отчасти врождённо. Полвека спустя это остаётся гипотезой: защитники и противники приводят новые данные, и консенсуса нет.</p>
+    <p>Вокруг неё — соперничающие исследовательские программы, и здесь важно не перепутать гипотезы с результатами. Когнитивная семантика (Лакофф, Джонсон) показывает: категории вырастают из опыта тела. Нейронаука (Дамасио) связывает значение с телесными маркерами. Барретт описывает понятия как предсказания, собранные из опыта. Фристон предлагает общий принцип: живое сводит ошибку предсказания к минимуму. Модели, обучающиеся на употреблении, встают между всеми этими линиями — и сами становятся предметом спора: понимают ли они хоть что-нибудь.</p>
+    <p><em class="shadow-mark">Тень эпохи.</em> Речь перенесена в инфраструктуру: фильтры, рейтинги и рекомендательные потоки решают, что будет услышано. Контроль над языком впервые стал автоматическим.</p>
+  </div>
+  <div class="epoch-lexis"><span class="label">Словарь эпохи</span>гипотеза · модель · тело · предсказание · употребление</div>
+  <div class="epoch-comment">
+    <span class="c-label">Эпистемический комментарий</span>
+    <b>История:</b> Хомский — с 1957 года; Лакофф и Джонсон — с 1980-го; программы Дамасио, Барретт, Фристона реальны и конкурируют между собой. <b>Интерпретация:</b> арка «от логоса к предсказанию» — наш сюжет; ни одна из программ не «доказала» свой взгляд на значение. <b>Шрифт:</b> Inter (Расмус Андерссон, 2016 →) — шрифт интерфейсов. Эпоха нейросетей смотрит на себя с экранов — это единственная честная оптика изнутри неё.
+  </div>
+</section>
+<section class="mirror" id="mirror" aria-labelledby="mirror-title">
+  <p class="m-label">проверка на анахронизм</p>
+  <h2 id="mirror-title">Одна мысль — семь языков</h2>
+  <div class="mirror-intro">
+    <p>Один и тот же вопрос — откуда у слова сила? — задан семь раз, словарём каждой эпохи. Это и есть проверка: если строка звучит чужим веком, значит, блок наверху написан плохо.</p>
+  </div>
+  <div class="table-scroll">
+    <table class="epoch-table">
+      <tbody>
+        <tr class="r-1">
+          <td>I · Античность<span class="t-voice">V в. до н. э. — III в. н. э.</span></td>
+          <td>Сила имени — в природе: истинное имя отзывается вещью.</td>
+        </tr>
+        <tr class="r-2">
+          <td>II · Средние века<span class="t-voice">IV — XV вв.</span></td>
+          <td>Сила слова — от Слова: человеческое слово указывает, божественное творит.</td>
+        </tr>
+        <tr class="r-3">
+          <td>III · Раннее Новое время<span class="t-voice">XVI — XVII вв.</span></td>
+          <td>Сила слова — в порядке представлений: значение — мысль, положенная на звук.</td>
+        </tr>
+        <tr class="r-4">
+          <td>IV · Просвещение<span class="t-voice">1690 — 1772</span></td>
+          <td>Сила слова — в употреблении: знак не имеет власти, пока употребление не сделало его общим.</td>
+        </tr>
+        <tr class="r-5">
+          <td>V · Девятнадцатый век<span class="t-voice">1816 — ок. 1900</span></td>
+          <td>Сила слова — в истории: корень помнит путь народа.</td>
+        </tr>
+        <tr class="r-6">
+          <td>VI · Двадцатый век<span class="t-voice">1916 — 1970-е</span></td>
+          <td>Сила слова — в системе: значение есть лишь различие внутри целого.</td>
+        </tr>
+        <tr class="r-7">
+          <td>VII · Двадцать первый век<span class="t-voice">1957 — наши дни</span></td>
+          <td>Сила слова — в теле и опыте: значение — предсказание, собранное из прожитого.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <p class="f-line">Семь эпох · семь типографических голосов · семь способов мыслить язык</p>
+  <p class="f-meta">редакция 2.0 · 2026<br>эссе, а не хроника — эпистемические комментарии отделяют историю от интерпретации</p>
+</footer>
+<a class="back-to-top" href="#top" aria-label="Наверх">↑</a>
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bar = document.querySelector('.progress-bar');
+  var toTop = document.querySelector('.back-to-top');
+  var ticking = false;
+
+  function updateChrome(){
+    var doc = document.documentElement;
+    var max = (doc.scrollHeight - window.innerHeight) || 1;
+    var y = window.scrollY || doc.scrollTop || 0;
+    if (bar) bar.style.width = Math.min(100, y / max * 100) + '%';
+    if (toTop){
+      if (y > 600) toTop.classList.add('is-visible');
+      else toTop.classList.remove('is-visible');
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; window.requestAnimationFrame(updateChrome); }
+  }, { passive:true });
+  updateChrome();
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.epoch-nav a'));
+  var sections = [];
+  links.forEach(function(a){
+    var target = document.querySelector(a.getAttribute('href'));
+    if (target) sections.push({ link:a, el:target });
+  });
+  function setActive(id){
+    sections.forEach(function(s){
+      var on = s.el.id === id;
+      s.link.classList.toggle('is-active', on);
+      if (on) s.link.setAttribute('aria-current','true');
+      else s.link.removeAttribute('aria-current');
+    });
+  }
+
+  var epochs = Array.prototype.slice.call(document.querySelectorAll('.epoch'));
+
+  if ('IntersectionObserver' in window){
+    var navObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) setActive(e.target.id);
+      });
+    }, { threshold:.3, rootMargin:'-12% 0px -55% 0px' });
+    sections.forEach(function(s){ navObserver.observe(s.el); });
+
+    if (reduced){
+      epochs.forEach(function(el){ el.classList.add('visible'); });
+    } else {
+      var fadeObserver = new IntersectionObserver(function(entries, obs){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold:.08 });
+      epochs.forEach(function(el){ fadeObserver.observe(el); });
+    }
+  } else {
+    epochs.forEach(function(el){ el.classList.add('visible'); });
+    window.addEventListener('scroll', function(){
+      if (!ticking){
+        ticking = true;
+        window.requestAnimationFrame(function(){
+          var y = window.scrollY || 0;
+          var current = sections.length ? sections[0].el.id : '';
+          sections.forEach(function(s){ if (s.el.offsetTop <= y + 140) current = s.el.id; });
+          setActive(current);
+          ticking = false;
+        });
+      }
+    }, { passive:true });
+  }
+})();
+</script>
+</body>
+</html>
