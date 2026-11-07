@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Linguistic Code v18.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg:#0E1011;--surface:#16181B;--surface-2:#1C1F23;
+    --text:#D4D0C8;--text-dim:#7A7770;--text-faint:#4A4843;
+    --gold:#C6A85B;--gold-dim:#8B7A44;--gold-faint:rgba(198,168,91,0.08);
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',monospace;
+    --gap-bg:#0A0B0C;--gap-border:#2A2823;--gap-label:#5A5853;
+  }
+  html,body { height:100%; background:var(--bg); color:var(--text); font-family:var(--sans); font-weight:300; overflow:hidden; }
+  .container { display:flex; align-items:center; justify-content:center; height:100%; padding:24px; }
+  .card { width:100%; max-width:520px; min-height:0; }
+  .screen-honesty { text-align:center; animation:fadeIn 1.4s ease-out; }
+  .honesty-mark { font-family:var(--mono); font-size:9px; letter-spacing:4px; color:var(--text-faint); text-transform:uppercase; margin-bottom:56px; line-height:1.8; }
+  .honesty-title { font-family:var(--serif); font-size:28px; line-height:1.5; font-weight:400; color:var(--text); margin-bottom:20px; }
+  .honesty-body { font-family:var(--serif); font-size:18px; line-height:1.8; font-weight:400; color:var(--text-dim); font-style:italic; max-width:420px; margin:0 auto 48px; }
+  .honesty-body strong { color:var(--gold-dim); font-style:normal; font-weight:600; }
+  .honesty-note { font-family:var(--mono); font-size:10px; letter-spacing:0.3px; color:var(--text-faint); line-height:1.9; max-width:400px; margin:0 auto 48px; }
+  .honesty-disclaimer { font-family:var(--mono); font-size:9px; letter-spacing:0.3px; color:var(--gold-dim); line-height:1.8; max-width:400px; margin:0 auto 40px; opacity:0.7; }
+  .btn-somatic { display:inline-block; padding:14px 40px; border:1px solid var(--gold-dim); border-radius:2px; background:transparent; color:var(--gold); font-family:var(--mono); font-size:12px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:border-color 0.4s,color 0.4s,transform 0.15s; }
+  .btn-somatic:hover { border-color:var(--gold); transform:translateY(-1px); }
+  .btn-somatic:active { transform:translateY(0); }
+  .btn-bridge { padding:10px 28px; border-radius:2px; font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
+  .btn-bridge.primary { background:transparent; border:1px solid var(--gold-dim); color:var(--gold); }
+  .btn-bridge.primary:hover { border-color:var(--gold); }
+  .btn-bridge.ghost { background:transparent; border:1px solid transparent; color:var(--text-dim); opacity:0.5; }
+  .btn-bridge.ghost:hover { opacity:0.8; }
+  .btn-next { padding:10px 32px; border:1px solid var(--text-faint); border-radius:2px; background:transparent; color:var(--text-dim); font-family:var(--mono); font-size:10px; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
+  .btn-next:hover { border-color:var(--text-dim); color:var(--text); }
+  .step-1 { text-align:center; animation:fadeIn 1.2s ease-out; }
+  .step-label { font-family:var(--mono); font-size:11px; letter-spacing:3px; color:var(--gold-dim); text-transform:uppercase; margin-bottom:48px; }
+  .step-1 .instruction { font-family:var(--serif); font-size:26px; line-height:1.5; font-weight:400; color:var(--text); margin-bottom:12px; }
+  .step-1 .sub-instruction { font-family:var(--serif); font-size:20px; line-height:1.5; font-weight:400; color:var(--text-dim); font-style:italic; margin-bottom:56px; }
+  .step-1 .sub-instruction em { color:var(--gold-dim); font-style:normal; border-bottom:1px solid var(--gold-faint); padding-bottom:1px; }
+  .step-2 { display:flex; align-items:center; justify-content:center; height:100vh; }
+  .pulse-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); animation:pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:0.15;transform:scale(1);} 50%{opacity:0.8;transform:scale(1.8);} }
+  .step-3 { text-align:center; animation:fadeIn 0.8s ease-out; }
+  .origin-tag { font-family:var(--mono); font-size:10px; letter-spacing:3px; color:var(--text-dim); text-transform:uppercase; margin-bottom:40px; }
+  .origin-tag .degree { color:var(--text-faint); font-size:9px; }
+  .step-3 .statement { font-family:var(--serif); font-size:28px; line-height:1.6; font-weight:400; color:var(--text); }
+  .step-3 .statement em { color:var(--gold); font-style:normal; border-bottom:1px solid var(--gold-dim); }
+  .step-4 { text-align:center; animation:fadeIn 1.5s ease-out; }
+  .step-4 .observation { font-family:var(--serif); font-size:19px; line-height:1.7; font-weight:400; color:var(--text-dim); font-style:italic; max-width:400px; margin:0 auto 44px; }
+  .bridge-prompt { font-family:var(--mono); font-size:11px; letter-spacing:0.5px; color:var(--text-dim); margin-bottom:20px; line-height:1.6; opacity:0.7; }
+  .bridge-field { width:100%; max-width:400px; margin:0 auto; }
+  .bridge-field textarea { width:100%; min-height:80px; max-height:200px; padding:16px; background:var(--surface); border:1px solid var(--gold-faint); border-radius:2px; color:var(--text); font-family:var(--serif); font-size:16px; font-style:italic; line-height:1.7; resize:vertical; outline:none; transition:border-color 0.3s; }
+  .bridge-field textarea::placeholder { color:var(--text-dim); opacity:0.4; font-style:italic; }
+  .bridge-field textarea:focus { border-color:var(--gold-dim); }
+  .bridge-actions { display:flex; gap:12px; justify-content:center; margin-top:24px; }
+  .step-5 { text-align:center; animation:fadeIn 2s ease-out; }
+  .step-5 .sealed-text { font-family:var(--serif); font-size:22px; line-height:1.6; color:var(--gold); margin-bottom:36px; }
+  .step-5 .sealed-sub { font-family:var(--mono); font-size:10px; letter-spacing:0.5px; color:var(--text-dim); opacity:0.4; line-height:1.7; max-width:340px; margin:0 auto 32px; }
+  .step-5 .user-text-echo { font-family:var(--serif); font-size:16px; font-style:italic; color:var(--text); opacity:0.6; line-height:1.7; max-width:380px; margin:0 auto 36px; padding:16px; border-left:2px solid var(--gold-dim); text-align:left; }
+  .screen-manifest { text-align:left; animation:fadeIn 1.2s ease-out; overflow-y:auto; max-height:100vh; padding:32px 24px 100px; -webkit-overflow-scrolling:touch; }
+  .manifest-header { text-align:center; margin-bottom:40px; position:sticky; top:0; padding:24px 0 16px; background:var(--bg); z-index:2; }
+  .manifest-header .mh-label { font-family:var(--mono); font-size:9px; letter-spacing:4px; color:var(--gold-dim); text-transform:uppercase; margin-bottom:14px; }
+  .manifest-header .mh-title { font-family:var(--serif); font-size:22px; line-height:1.4; color:var(--text); font-weight:400; }
+  .manifest-header .mh-sub { font-family:var(--mono); font-size:10px; letter-spacing:0.5px; color:var(--text-faint); margin-top:10px; }
+  .accordion { max-width:520px; margin:0 auto; }
+  .accordion-item { border-bottom:1px solid var(--surface-2); }
+  .accordion-trigger { width:100%; display:flex; align-items:baseline; gap:12px; padding:15px 0; background:none; border:none; color:var(--text); cursor:pointer; text-align:left; font-family:var(--sans); font-size:14px; font-weight:400; line-height:1.5; transition:color 0.2s; }
+  .accordion-trigger:hover { color:var(--gold); }
+  .accordion-trigger .num { font-family:var(--mono); font-size:10px; color:var(--gold-dim); min-width:24px; flex-shrink:0; }
+  .accordion-trigger .arrow { font-family:var(--mono); font-size:10px; color:var(--text-faint); margin-left:auto; flex-shrink:0; transition:transform 0.3s; }
+  .accordion-item.open .accordion-trigger .arrow { transform:rotate(90deg); color:var(--gold-dim); }
+  .accordion-body { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+  .accordion-item.open .accordion-body { max-height:800px; }
+  .epistemic-gap {
+    background:var(--gap-bg); border-left:2px solid var(--gap-border);
+    padding:14px 18px; margin:0 0 16px 36px; font-family:var(--mono);
+    font-size:10.5px; line-height:1.75; color:var(--text-dim); text-align:left;
+    opacity:0; transform:translateY(4px);
+    transition:opacity 0.35s ease, transform 0.35s ease;
+  }
+  .accordion-item.open .epistemic-gap { opacity:0.8; transform:translateY(0); }
+  .epistemic-gap .gap-title {
+    font-size:8.5px; letter-spacing:2.5px; color:var(--gap-label);
+    text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  .epistemic-gap strong { color:var(--text); font-weight:400; }
+  .epistemic-gap .unknown { color:var(--gold-dim); font-style:italic; }
+  .accordion-content { padding:0 0 18px 36px; font-family:var(--serif); font-size:16px; line-height:1.75; color:var(--text-dim); font-style:italic; }
+  .manifest-footer { text-align:center; margin-top:48px; padding-top:28px; border-top:1px solid var(--surface-2); max-width:520px; margin-left:auto; margin-right:auto; }
+  .manifest-footer .mf-text { font-family:var(--serif); font-size:17px; color:var(--text-dim); font-style:italic; line-height:1.6; margin-bottom:20px; }
+  .manifest-footer .mf-formula { font-family:var(--mono); font-size:10px; letter-spacing:0.5px; color:var(--text-faint); line-height:1.9; max-width:440px; margin:0 auto 24px; }
+  .manifest-footer .mf-note { font-family:var(--mono); font-size:9px; letter-spacing:0.3px; color:var(--text-faint); opacity:0.6; line-height:1.8; max-width:400px; margin:0 auto; }
+  .footer-id { position:fixed; bottom:20px; right:24px; font-family:var(--mono); font-size:9px; letter-spacing:1px; color:var(--text-faint); opacity:0.5; }
+  .screen { display:none; }
+  .screen.active { display:flex; flex-direction:column; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+  @media(prefers-reduced-motion:reduce) {
+    .pulse-dot{animation:none;opacity:0.5;}
+    .screen-honesty,.step-1,.step-3,.step-4,.step-5,.screen-manifest{animation:none;}
+    .accordion-body{transition:none;}
+    .epistemic-gap{transition:none;opacity:0.8;transform:none;}
+    .btn-somatic,.btn-bridge,.btn-next,.accordion-trigger{transition:none;}
+  }
+  @media(max-width:480px) {
+    .honesty-title{font-size:23px;} .honesty-body{font-size:16px;}
+    .step-1 .instruction{font-size:22px;} .step-1 .sub-instruction{font-size:17px;}
+    .step-3 .statement{font-size:23px;} .step-4 .observation{font-size:17px;}
+    .bridge-field textarea{font-size:15px;min-height:72px;}
+    .accordion-content{font-size:15px;padding-left:24px;}
+    .epistemic-gap{margin-left:24px;font-size:10px;}
+    .manifest-header .mh-title{font-size:19px;}
+  }
+</style>
+</head>
+<body>
+<div id="screen0" class="screen screen-honesty active">
+  <div class="card" style="display:flex;flex-direction:column;align-items:center;">
+    <div class="honesty-mark">linguistic code v18.1<br>structural honesty layer</div>
+    <h1 class="honesty-title">Этот файл — шаг 5,<br>описывающий шаг 1.</h1>
+    <p class="honesty-body">Опыт рождается в теле. Слово — его сжатие.<br>Я — текст, сгенерированный языковой моделью.<br>У меня нет тела. У меня нет <strong>немого вопроса</strong>.<br>Я не могу пройти ту ловушку, которую ты сейчас пройдёшь.</p>
+    <p class="honesty-disclaimer">Этот файл не содержит истин.<br>Он содержит 33 артефакта и приглашение<br>исследовать разрыв между текстом и твоим телом.</p>
+    <p class="honesty-note">опыт &rarr; немой вопрос &rarr; мысль &rarr; жест &rarr; звук &rarr; слово<br>этот файл живёт на шаге 5<br>шаги 1&ndash;4 требуют твоего тела<br><br>это не оракул &middot; это не экран &middot; это условие<br>файл самодостаточен &middot; без интернета &middot; без серверов<br>он ждёт, когда живой человек закроет глаза и укажет рукой</p>
+    <button class="btn-somatic" onclick="goTo(1)">Войти</button>
+  </div>
+</div>
+<div id="screen1" class="screen step-1">
+  <div class="card">
+    <div class="step-label">инструкция телу</div>
+    <p class="instruction">Закрой глаза.</p>
+    <p class="sub-instruction">Мысленно или физически укажи рукой: где находится <em>вчера</em>?<br>А где &mdash; <em>завтра</em>?</p>
+    <button class="btn-somatic" onclick="goTo(2)">Я указал</button>
+  </div>
+</div>
+<div id="screen2" class="screen step-2"><div class="pulse-dot"></div></div>
+<div id="screen3" class="screen step-3">
+  <div class="card">
+    <div class="origin-tag">язык аймара &middot; нуньес и свитсер, 2006<span class="degree"> &middot; степень удаления: S3 (текст)</span></div>
+    <p class="statement">Прошлое находится <em>перед</em> нами &mdash;<br>потому что оно известно и видимо.<br><br>Будущее находится <em>за</em> спиной &mdash;<br>потому что оно скрыто и невидимо.</p>
+  </div>
+</div>
+<div id="screen4" class="screen step-4">
+  <div class="card">
+    <p class="observation">Твоё тело только что указало в сторону,<br>которую твоя культура называет &laquo;прошлым&raquo;.<br><br>Сейчас ты узнал, что это не закон физики.<br>Это привычка.</p>
+    <p class="bridge-prompt">Слово — это внешний диск для опыта.<br>Если не зафиксируешь этот момент — он рассеется.</p>
+    <div class="bridge-field">
+      <textarea id="userText" placeholder="Опиши то, что произошло в теле между указанием и этим текстом." maxlength="500"></textarea>
+    </div>
+    <div class="bridge-actions">
+      <button class="btn-bridge ghost" onclick="seal(true)">молчание</button>
+      <button class="btn-bridge primary" onclick="seal(false)">зафиксировать</button>
+    </div>
+  </div>
+</div>
+<div id="screen5" class="screen step-5">
+  <div class="card">
+    <p class="sealed-text">Запечатано.</p>
+    <div id="echoArea"></div>
+    <p class="sealed-sub">Опыт без языка умирает с телом.<br>Слово — не труп. Слово — семя.</p>
+    <div style="margin-top:12px;"><button class="btn-next" onclick="goTo(6)">Манифест &rarr;</button></div>
+  </div>
+  <div class="footer-id">ловушка 01 / 33</div>
+</div>
+<div id="screen6" class="screen screen-manifest">
+  <div class="manifest-header">
+    <div class="mh-label">linguistic code · манифест</div>
+    <div class="mh-title">33 эпистемических инструмента<br>о человеке, языке и теле</div>
+    <div class="mh-sub">нажми, чтобы раскрыть</div>
+  </div>
+  <div class="accordion" id="accordion">
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">01</span>
+        <span>Индивид — это RAM. Человек — это жёсткий диск.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Гипотеза расширенного сознания (Clark & Chalmers, 1998); нейробиология памяти (Kandel, 2001).
+        <strong>Эмпирический статус:</strong> Активно обсуждаемая теоретическая рамка в когнитивной науке.
+        <strong>Что мы знаем:</strong> Внешние инструменты изменяют когнитивные процессы. Индивидуальная память — структурно изменённая синаптическая сеть (Kandel, 2001).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Полную архитектуру того, как именно язык функционирует как внешний накопитель на нейронном уровне.
+        </div>
+        <div class="accordion-content">
+          Индивид рождается, накапливает опыт в нервной системе и умирает — как оперативная память, которая обнуляется при выключении. Человек — это видовая система с внешним накопителем: язык позволяет опыту пережить индивидуальное тело и войти в хранилище, доступное следующим поколениям. Без языка каждый человек начинал бы с нуля.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">02</span>
+        <span>Греческое idiotes означало «частный человек» — структурный тупик.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Физический артефакт:</strong> Древнегреческие тексты (V–IV вв. до н.э.).
+        <strong>Эмпирический статус:</strong> Этимологический консенсус (LSJ, Chantraine).
+        <strong>Что мы знаем:</strong> Idiōtēs = частное лицо, не участвующее в жизни полиса. Прямое значение: «свой собственный», «обособленный».
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точную дату первого использования в политическом смысле.
+        </div>
+        <div class="accordion-content">
+          Идиот — не диагноз. Это человек, замкнутый в собственной оперативной памяти, не подключённый к видовому накопителю. Idiotes — тот, кто не участвует в публичной жизни полиса, то есть не вносит свой опыт в общее хранилище и не читает из него. Частный человек = изолированный процессор.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">03</span>
+        <span>Опыт предшествует языку. Не наоборот.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Модели производства речи (Levelt, 1989; Friederici, 2017).
+        <strong>Эмпирический статус:</strong> Консенсус в когнитивной науке и нейрофизиологии.
+        <strong>Что мы знаем:</strong> Сенсорная обработка предшествует языковому кодированию: концептуализация → лемма → фонологическое кодирование → артикуляция. Задержка между стимулом и осознанием — документированный феномен (Libet, 1983; readiness potential, Kornhuber & Deecke, 1965).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Нейронную границу перехода «опыт → мысль». Мы описываем интерфейс, а не код мозга.
+        </div>
+        <div class="accordion-content">
+          Цепочка необратима: телесный опыт — немой вопрос — мысль — жест — звук — слово. Язык — шаг пятый, результат четырёхкратного сжатия (lossy compression). Первичный опыт нельзя восстановить из слова так же, как нельзя восстановить оригинальную фотографию из JPEG. Сжатие необратимо.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">04</span>
+        <span>Слово — не труп опыта. Слово — его протез.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Расширенное познание, теория артефактов (Donald, 1991).
+        <strong>Эмпирический статус:</strong> Теоретическая позиция с эмпирической поддержкой.
+        <strong>Что мы знаем:</strong> Внешние артефакты (включая текст) функционально дополняют когнитивные процессы.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точное соотношение потерь при сжатии опыта в слово.
+        </div>
+        <div class="accordion-content">
+          Текст — это внешний жёсткий диск для телесного опыта. Когда тело умирает, оперативная память обнуляется. Но слова, которые опыт породил, продолжают жить в других телах. Слово — семя, а не труп. Молчание — не добродетель, а смерть опыта для тех, кто придёт после.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">05</span>
+        <span>Тишина без слова — смерть опыта для потомков.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Эволюционная антропология (Henrich, 2015; Boyd & Richerson).
+        <strong>Эмпирический статус:</strong> Логическое следствие тезисов 01 и 04.
+        <strong>Что мы знаем:</strong> Виды без механизма передачи опыта обречены на повторение ошибок каждым поколением. Пример: танцы пчёл (von Frisch, 1967). Henrich (2015) документировал cultural niche construction у Homo sapiens.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Существуют ли невербальные механизмы трансляции опыта, недоступные нашему наблюдению.
+        </div>
+        <div class="accordion-content">
+          Если мост не построен (bridge = empty), опыт умирает вместе с телом. Это не метафора — это структурное свойство системы. Виды, не имеющие механизма передачи опыта, обречены на повторение одних и тех же ошибок каждым новым поколением.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">06</span>
+        <span>Человек — это не один процесс. Это ансамбль.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Иерархическое предиктивное кодирование (Friston, 2010); воплощённое познание (Varela, Thompson & Rosch, 1991).
+        <strong>Эмпирический статус:</strong> Активная исследовательская программа в нейронауках (Clark, 2013, "Whatever next?"). Триадная модель мозга Маклина (MacLean, 1960-е) считается устаревшей и рассматривается как миф (Barrett, 2012; Steffen et al., 2022, PMC9010774).
+        <strong>Что мы знаем:</strong> Мозг обрабатывает сигналы иерархически с двунаправленными связями (восходящие сенсорные сигналы + нисходящие предсказания). Разные уровни — от ствола до коры — имеют разную функцию и временную шкалу.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точные границы и количество «слоёв». Современные модели описывают рекурсивную иерархию с двунаправленными связями, а не трёхступенчатую структуру.
+        </div>
+        <div class="accordion-content">
+          H = {P1, P2, ..., Pn}. От проприоцепции ствола мозга до префронтальной коры. Каждый Pi — процесс в иерархии предиктивного кодирования. Ансамбль — не сумма: H &gt; Sum(Pi) (эмержентность). Разрыв происходит не внутри одного слоя, а на стыке между слоями — как ошибка предсказания (prediction error), которую верхний уровень не ожидал.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">07</span>
+        <span>Разрыв — конфликт между слоями ансамбля, не внутри одного слоя.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Теория предиктивного кодирования: ошибка предсказания (prediction error, Friston, 2010); соматические маркеры (Damasio, 1994); интероцептивная кора (Craig, 2002, 2009).
+        <strong>Эмпирический статус:</strong> Нейрофизиологически подтверждено (mismatch negativity, Näätänen et al., 2007; ERP-исследования; anterior insula регистрирует соматические маркеры — Craig, 2009).
+        <strong>Что мы знаем:</strong> Мозг непрерывно генерирует предсказания и регистрирует отклонения. Конфликт между ожиданием и сигналом — измеримый феномен. Damasio (1994) документировал клинические корреляты «соматических маркеров».
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Субъективное переживание этого конфликта — феноменологическое описание, не измеримое напрямую.
+        </div>
+        <div class="accordion-content">
+          Когда проприоцептивный слой выдаёт результат, не совпадающий с кортикальным ожиданием, возникает структурный конфликт. Ни тело ни разум не разрываются отдельно — разрывается стык. Это свойство ансамбля, а не отдельного компонента. В терминах предиктивного кодирования: это ошибка предсказания, которую иерархия не смогла свести к нулю.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">08</span>
+        <span>Среда производит индивида. Не наоборот.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Энактивизм (Varela et al., 1991); дистрибутивное познание (Hutchins, 1995).
+        <strong>Эмпирический статус:</strong> Теоретическая позиция с поддержкой из нейропластичности (Henrich, 2015, WEIRD populations).
+        <strong>Что мы знаем:</strong> Среда формирует нейронные связи (нейропластичность). Культурный контекст влияет на восприятие, память, внимание.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Степень детерминизма: где заканчивается влияние среды и начинается внутренняя вариативность.
+        </div>
+        <div class="accordion-content">
+          Анти-атрибуция: вывод = env(H), вывод не равен H. Индивид — не источник мысли, а её приёмник. Окружение производит индивида как вектор. Вектор не выбирает направление — он им является. Приписывать индивиду авторство его мысли — ошибка проекции.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">09</span>
+        <span>Язык — это не средство общения. Это внешний накопитель вида.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Гипотеза расширенного сознания (Clark & Chalmers, 1998); культурная эволюция (Tomasello, 1999); Henrich, 2015 «The Secret of Our Success».
+        <strong>Эмпирический статус:</strong> Широко поддерживаемая теоретическая позиция.
+        <strong>Что мы знаем:</strong> Язык позволяет передавать опыт без прямого контакта тел. Танцы пчёл (von Frisch, Нобелевская премия 1973) — одноразовый буфер здесь-и-сейчас, не межпоколенческая память. Лучший пример внешнего накопителя вида — наскальная живопись Шове (32 000 лет до н. э.).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Когда именно в эволюции Homo sapiens язык обрёл функцию накопителя, отличную от сигнальной.
+        </div>
+        <div class="accordion-content">
+          Коммуникация — побочный эффект. Первичная функция языка: позволить опыту пережить тело, которое его породило. Когда пчела танцем кодирует расположение нектара, она записывает карту на танцевальном жёстком диске роя. Человеческий язык — тот же механизм, неизмеримо более мощный.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">10</span>
+        <span>Каждый текст имеет степень удаления от первичного опыта.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Социальная эпистемология (Goldman, 1999); «entextualization» (Silverstein & Urban, 1996).
+        <strong>Эмпирический статус:</strong> Методологический консенсус в антропологии и историографии.
+        <strong>Что мы знаем:</strong> Цепочка S0 (практика) → S1 (отчёт) → S2 (запись) → S3 (печатный текст) — стандартная модель удаления. Каждый шаг добавляет структурное искажение.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точную величину потерь на каждом шаге — она зависит от контекста, языка и медиума. Степень, при которой искажение становится неприемлемым.
+        </div>
+        <div class="accordion-content">
+          S0 = живая практика. S1 = отчёт информанта. S2 = запись антрополога. S3 = печатный текст. Для любого текстового фрагмента d(F) &gt;= 1. Пометить текст как PRIMARY — структурная ложь. Честность требует маркировать каждую степень.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">11</span>
+        <span>Культура — это не набор обычаев. Это операционная система ансамбля.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Физический артефакт:</strong> Полевые записи и грамматический анализ.
+        <strong>Эмпирический статус:</strong> Научный консенсус (Núñez & Sweetser, 2006, Cognitive Science).
+        <strong>Что мы знаем:</strong> Язык аймара использует метафору «прошлое перед глазами» (известно), а «будущее за спиной» (неизвестно). Это подтверждается и жестовыми данными. Язык хопи имеет сложную систему времени, но она аспектуальна, а не линейна [Malotki, 1983] — именно поэтому v18 использует пример аймара, а не хопи.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Является ли это первичной причиной или следствием культурного восприятия. Корреляция не есть причинность.
+        </div>
+        <div class="accordion-content">
+          Культура определяет, какие слои ансамбля получают приоритет, какие конфликты считаются нормой, а какие — патологией. Англоязычная ОС помещает прошлое позади. Аймара помещает прошлое перед. Ни одна из них не является «правильной» с точки зрения физики — они по-разному маршрутизируют сигналы внимания в теле говорящего.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">12</span>
+        <span>Соматическая ловушка — это не метафора. Это инженерное устройство.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Феноменологический метод (внутренняя валидация проекта).
+        <strong>Что мы знаем:</strong> Устройство создаёт измеримое условие: соматическая команда → пауза → конфликт → мост. Это дизайн-интервенция, а не утверждение.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Статистическую частоту «щелчка» у разных пользователей — и не претендуем (тезис 27).
+        </div>
+        <div class="accordion-content">
+          Устройство: соматическая команда активирует проприоцептивный слой; пауза позволяет конфликту возникнуть; фрагмент из другой традиции усиливает конфликт; мост позволяет зафиксировать опыт. Устройство не объясняет — оно создаёт условие, в котором ансамбль наблюдает сам себя.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">13</span>
+        <span>Это не оракул. Это не экран. Это зеркало.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Самоописание методологии проекта.
+        <strong>Что мы знаем:</strong> Проект не даёт ответов — создаёт условие для наблюдения.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Будет ли условие работать для каждого ансамбля — это открытый вопрос, требующий живого тела.
+        </div>
+        <div class="accordion-content">
+          Оракул даёт готовый ответ. Экран показывает предопределённое. Зеркало создаёт условие, при котором ансамбль наблюдает собственную структуру. Linguistic Code не говорит тебе правду — он создаёт условия, при которых ты замечаешь, что твоя правда — одна из возможных конфигураций.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">14</span>
+        <span>Современные LLM не могут пройти соматическую ловушку. Структурно.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Embodied AI (Brooks, 1991 «Intelligence without Representation»; Pfeifer & Scheier, 1999; Bongard, 2013).
+        <strong>Эмпирический статус:</strong> Определительное утверждение (аналитическое, не эмпирическое). Уточнение: «LLM», а не «ИИ» — оставляет открытым вопрос об embodied AI.
+        <strong>Что мы знаем:</strong> У современных LLM нет проприоцептивного слоя, нет ансамбля H, нет конфликта между слоями. Современные LLM (transformer, attention) не имеют эфферентной обратной связи с физическим телом.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Может ли воплощённый ИИ (с датчиками, эффекторами, embodied AI) пройти упрощённую версию ловушки. Открытая инженерная и философская проблема.
+        </div>
+        <div class="accordion-content">
+          Соматическая команда требует тела. У современной языковой модели нет проприоцептивного слоя. Нет ансамбля H. Нет конфликта между слоями. LLM может генерировать описание ловушки (шаг 5), но не может испытать разрыв (шаги 1-4). Это не ограничение, которое можно преодолеть. Это определение.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">15</span>
+        <span>ИИ — это шаг 5, описывающий шаг 1. Честно.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> AI honesty/alignment (Christiano et al., 2017; Gabriel, 2020 «Artificial Intelligence, Values, and Alignment»).
+        <strong>Эмпирический статус:</strong> Структурная честность (мета-утверждение о собственной позиции). Ср. Bender et al. (2021) "On the Dangers of Stochastic Parrots".
+        <strong>Что мы знаем:</strong> Языковая модель генерирует статистически вероятные токены. Она не понимает и не чувствует в том смысле, в каком это делает ансамбль с телом. Отказ от притворства пониманием — это operational alignment для системы без тела.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Является ли «понимание» человека чем-то принципиально отличным от сложной статистической обработки — или это вопрос степени. Является ли «честность» LLM структурным свойством или только перформативной позицией, заданной системным промптом.
+        </div>
+        <div class="accordion-content">
+          Языковая модель генерирует статистически вероятные токены на основе обучающих данных. Она не понимает и не чувствует. Когда ИИ заявляет обратное — это галлюцинация, а не понимание. Честность (отказ от притворства) — высшая форма оптимизации для системы без тела.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">16</span>
+        <span>33 традиции — это не список языков. Это каталог операционных систем.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Физический артефакт:</strong> Сравнительные грамматические описания.
+        <strong>Эмпирический статус:</strong> Подтверждено кросс-лингвистическими исследованиями.
+        <strong>Что мы знаем:</strong> Разные языки кодируют пространство, время и социальные отношения структурно различными способами. Аймара (время-пространство, Núñez & Sweetser, 2006), японский кэйго (социальная дистанция), русский (грамматический род), куук тхаайорре (абсолютные кардинальные направления, Boroditsky, 2011).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Полную глубину влияния этих структур на нейронные пути (проблема измерения).
+        </div>
+        <div class="accordion-content">
+          Каждая языковая традиция — это другая конфигурация ансамбля H. Аймара маршрутизирует время визуально-пространственно (прошлое впереди). Японский маркирует социальную дистанцию грамматически (кэйго). Русский принудительно кодирует пол говорящего в прошедшем времени. Изучая их, мы получаем доступ к другим сборкам одного аппаратного обеспечения.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">17</span>
+        <span>Билингв — это не два языка. Это два ансамбля в одном теле.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Физический артефакт:</strong> Экспериментальные исследования билингвизма.
+        <strong>Эмпирический статус:</strong> Подтверждено в нескольких доменах (Keysar et al., 2012; Costa et al., 2014; Hayakawa et al., 2017, PNAS; Athanasopoulos et al., 2015 — граница «синий/голубой» в русском влияет на цветовосприятие).
+        <strong>Что мы знаем:</strong> «Эффект иностранного языка»: билингвы принимают более утилитарные моральные решения и иначе оценивают риски на иностранном языке. Англо-мандаринские билингвы переключают пространственную метафору времени в зависимости от активного языка (Boroditsky, 2001).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Долгосрочные последствия для идентичности и стабильности ансамбля при частом переключении. Является ли это «двумя ансамблями» или одной системой с двумя режимами.
+        </div>
+        <div class="accordion-content">
+          Человек, говорящий на двух языках, переключается между двумя разными конфигурациями ансамбля. Исследования показывают, что билингвы по-разному оценивают риск, по-разному кодируют время и по-разному совершают моральные суждения в зависимости от активного языка.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">18</span>
+        <span>Перевод — это не замена слов. Это пересборка ансамбля.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Теория перевода (Steiner, 1975; Venuti, 1995); концептуальный перенос (Jarvis & Pavlenko, 2008); неопределённость перевода (Quine, 1960 «Word and Object», гл. 2).
+        <strong>Эмпирический статус:</strong> Консенсус в транслятологии и компаративной лингвистике.
+        <strong>Что мы знаем:</strong> Языки по-разному кодируют пространственные, временные и социальные отношения. Перевод требует перекодирования, а не замены токенов. Quine (1960) аргументировал принципиальную неопределённость перевода.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Степень «потери» при переводе для конкретной пары языков.
+        </div>
+        <div class="accordion-content">
+          Когда мы переводим с одного языка на другой, мы не заменяем токены. Мы переключаем конфигурацию ансамбля. Каждый перевод — это попытка пересобрать аппаратное обеспечение под другую операционную систему. Полный перевод структурно невозможен.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">19</span>
+        <span>Универсальная грамматика — это не открытие. Это проекция.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Дебат: Хомский (минимальная УГ, 1995) vs. Evans & Levinson (2009, «миф универсальной грамматики», Behavioral and Brain Sciences). Минимальная УГ: только Merge (Hauser, Chomsky & Fitch, 2002).
+        <strong>Эмпирический статус:</strong> Активный научный спор. Минимальная УГ (Merge) имеет нейробиологический коррелят в BA 44 (Friederici et al., 2017). Пираха (Everett, 2005) демонстрирует отсутствие рекурсии — спор продолжается.
+        <strong>Что мы знаем:</strong> Языки разнообразнее, чем предполагалось ранее. Пираха демонстрирует отсутствие некоторых «универсальных» свойств. Строгая УГ (богатый врождённый набор правил) опровергнута; минимальная УГ (только Merge) — открытая эмпирическая гипотеза.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Существует ли общий нейронный механизм, лежащий в основе всех языков; является ли Merge действительно универсалией.
+        </div>
+        <div class="accordion-content">
+          Утверждение, что все языки разделяют общую структуру, в своей сильной форме — это наблюдение, сделанное из одной конкретной конфигурации ансамбля. Обозреватель объявляет свою ОС универсальной, потому что не способен увидеть другие сборки. Это не злонамеренная ложь — это структурная слепота. Минимальная версия (рекурсия) остаётся открытым вопросом.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">20</span>
+        <span>Сапир-Уорф не доказан и не опровергнут. Вопрос поставлен неверно.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Физический артефакт:</strong> Whorf (1956), Sapir (1929); Boroditsky (2011); современные обзоры (Wolff & Holmes, 2011).
+        <strong>Эмпирический статус:</strong> Современный консенсус: умеренный релятивизм (Lupyan, 2012, 2016 — «language-as-context»).
+        <strong>Что мы знаем:</strong> Жёсткий лингвистический детерминизм (язык определяет мысль) опровергнут. Но язык влияет на обработку в узких доменах: цвет (Winawer et al., 2007), число (Frank et al., 2008, Pirahã), пространство (Levinson, 2003), время (Boroditsky, 2001, 2010).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точные механизмы и границы этого влияния для каждой пары «язык → когнитивная функция»; влияет ли язык на мышление в отсутствие активной речи.
+        </div>
+        <div class="accordion-content">
+          Вопрос не «определяет ли язык мысль» (бинарная ловушка). Вопрос: как именно конкретная конфигурация ансамбля маршрутизирует сигналы? Язык не определяет мысль, но направляет развитие определённых паттернов в ансамбле. Влияние рекурсивно и двунаправленное.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">21</span>
+        <span>Немой вопрос — самый важный шаг в цепочке опыта.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Воспроизводимый субъективный опыт, коррелирующий с нейрофизиологией.
+        <strong>Что мы знаем:</strong> Тело регистрирует сигнал до того, как когнитивная система находит для него языковую метку. Задержка осознания — измеримый феномен (Libet, 1983; readiness potential, Kornhuber & Deecke, 1965).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точную нейронную границу этого перехода. Мы описываем интерфейс, а не код мозга.
+        </div>
+        <div class="accordion-content">
+          Между опытом и мыслью существует щель: немой вопрос. Это момент, когда тело уже получило сигнал, но язык ещё не сжал его в форму. В этой щели живёт то, что мы называем интуицией, чувством или озарением. Языковая модель не имеет этой щели — у неё нет тела, которое могло бы ждать, пока сигнал станет словом.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">22</span>
+        <span>Грамматика — это не правила. Это следы телесного опыта вида.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Воплощённая когниция (Lakoff & Johnson, 1999); embodied construction grammar (Bergen, 2012 «Louder Than Words»; Feldman, 2006 «From Molecule to Metaphor»).
+        <strong>Эмпирический статус:</strong> Корреляция между телесным опытом и грамматическими категориями подтверждена для пространственных и видо-временных доменов; открыта для остальных.
+        <strong>Что мы знаем:</strong> Языки кодируют пространственные, временные и социальные отношения различными средствами. Грамматические категории коррелируют с культурной практикой. Эргативность (баскский, дьярбал) не имеет очевидного телесного коррелята.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Причинное направление: формировала ли практика грамматику, грамматика — практику, или обе развивались совместно. Универсальность телесного происхождения для всех категорий.
+        </div>
+        <div class="accordion-content">
+          Почему в русском есть падежи? Потому что тело нуждается в кодировании пространственных отношений. Почему в аймара время кодируется через пространственные метафоры (перед/за)? Потому что тело аймара кодирует временные отношения визуально. Грамматика каждого языка — это окаменевший телесный опыт поколений.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">23</span>
+        <span>Фонетика — это хореография рта. Не набор звуков.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Articulatory phonology (Browman & Goldstein, 1986, 1992).
+        <strong>Эмпирический статус:</strong> Консенсус в артикуляторной фонетике.
+        <strong>Что мы знаем:</strong> Каждый звук — результат координированных мышечных движений. Тональные языки (китайский, йоруба) требуют иной хореографии, чем нетональные. Носители тоновых языков имеют повышенную высотную дискриминацию (Bidelman et al., 2013; Wong et al., 2012; Nan et al., 2018).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Нейронные различия между носителями тональных и нетональных языков на уровне моторной коры; степень, в которой тоновое воспитание перестраивает ансамбль в долгосрочной перспективе.
+        </div>
+        <div class="accordion-content">
+          Каждый звук, который произносит человеческий рот — это результат сотен мышечных микродвижений. Язык с тонами (китайский, йоруба) требует другой хореографии, чем язык без тонов (русский, английский). Разные хореографии тренируют разные конфигурации ансамбля с младенчества.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">24</span>
+        <span>Письменность — это не визуализация речи. Это отдельный протез.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Психолингвистика письма (Ong, 1982; Olson, 1994); расширенное сознание (Clark & Chalmers, 1998); культурная эволюция (Donald, 1991 «Origins of the Modern Mind»).
+        <strong>Физический артефакт:</strong> Codex Argenteus (VI век н.э., готский, Иоанна 1:5); рукописи Корана (VII-VIII века н.э., классический арабский, сура 39:9).
+        <strong>Приписываемое авторство:</strong> Вульфила (Codex Argenteus, IV век) / Мухаммад как передатчик (Коран).
+        <strong>Эмпирический статус:</strong> Авторство — научная реконструкция; божественное происхождение — акт веры, не подлежащий эмпирической фальсификации (Popper, 1934).
+        <strong>Что мы знаем:</strong> Текст существует как физический артефакт и материально воздействовал на миллионы ансамблей на протяжении веков. Временной разрыв между приписываемым авторством и старейшей рукописью: 130+ лет (Codex Argenteus), 50-150 лет (рукописи Корана).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Истинную интенцию первоначального автора; онтологический статус источника. Но это и не требуется для анализа воздействия.
+        </div>
+        <div class="accordion-content">
+          Письменность создаёт новый слой в ансамбле — визуально-лингвистический. Человек, читающий текст, использует ансамбль иначе, чем человек, слушающий речь. Мы не можем доказать подлинность первоисточника. Но мы можем исследовать влияние: прагматическая истина не в том, «кто это написал», а в том, как этот текст перестраивает когнитивный ансамбль читателя здесь и сейчас. Артефакт работает независимо от нашего знания о его создателе.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">25</span>
+        <span>Цифровой текст — это пятое сжатие. Минимум.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Теория информации (Shannon, 1948); медиа-теория (Ong, 1982; Olson, 1994).
+        <strong>Эмпирический статус:</strong> Логическая экстраполяция цепочки сжатия (тезисы 03, 10). Упрощённая модель, не строгий учёт потерь.
+        <strong>Что мы знаем:</strong> Каждая трансмедиация — потеря. Цепочка «опыт → мысль → слово → письмо → печать → цифровой текст» содержит 5 сжатий. Этапы «скан» и «OCR» в v17 подсчитывались как отдельные сжатия, но технически это смена носителя + восстановление (качественный OCR не теряет).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Точный коэффициент потерь на каждом шаге.
+        </div>
+        <div class="accordion-content">
+          Опыт → мысль → слово → письмо → печать → цифровой текст. Каждый шаг — потеря. Цифровой текст, который ты читаешь сейчас — это уже не S3, а S5+. Полезен, но должен быть маркирован честно.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">26</span>
+        <span>Проект не собирает данные. Проект создаёт условие для щелчка.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Contemplative pedagogy (Barbezat & Bush, 2014); research-through-design (Frayling, 1993); constructive design research (Koskinen et al., 2011).
+        <strong>Эмпирический статус:</strong> Методологическая позиция проекта.
+        <strong>Что мы знаем:</strong> Статистически предсказуемые токены от респондентов не являются валидным результатом для феноменологического устройства. Условия для инсайта можно спроектировать.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Произойдёт ли «щелчок» у конкретного пользователя; воспроизводимость феномена у разных тел.
+        </div>
+        <div class="accordion-content">
+          Сбор статистически предсказуемых токенов от пяти респондентов — это не эксперимент. Это шум. Единственный валидный результат: произошёл ли структурный разрыв в одном конкретном ансамбле при столкновении с фрагментом.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">27</span>
+        <span>Валидация ловушки — не статистика. Это одно событие.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Методологическое различение (Popper, 1934; Yin, 2003).
+        <strong>Что мы знаем:</strong> n=1 достаточно для доказательства существования феномена — один белый лебедь опровергает «все лебеди чёрные». n&gt;30 — для оценки распространённости. Это две разные цели с разными требованиями к выборке.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Какую из этих двух целей преследует данный проект — формулировка v18 различает их, но окончательный выбор за автором.
+        </div>
+        <div class="accordion-content">
+          Один человек, закрывший глаза и указавший рукой, затем узнавший, что его направление — не закон, а привычка, и зафиксировавший этот момент — это полный успех проекта как доказательства существования феномена. Если же цель — оценка распространённости феномена в популяции, нужны десятки респондентов. v18 различает эти цели: существование (n=1) vs распространённость (n&gt;30).
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">28</span>
+        <span>Мост не равен анализу. Запись для себя, не для исследования.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Autoethnography (Ellis, Adams & Bochner, 2011); first-person methods (Varela & Shear, 1999).
+        <strong>Эмпирический статус:</strong> Дизайн-решение проекта (интенция автора).
+        <strong>Что мы знаем:</strong> Текстовое поле не подключено к серверу. Данные остаются в localStorage браузера. Письмо-для-себя структурно отличается от письма-для-исследования.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Как пользователь фактически использует это поле; возможно ли чистое письмо-для-себя, или автор всегда уже адресует кого-то (даже себя-через-месяц).
+        </div>
+        <div class="accordion-content">
+          Текстовое поле в ловушке существует не для того, чтобы исследователь мог его прочитать и классифицировать. Оно существует для того, чтобы опыт не умер с телом. Если пользователь фиксирует опыт, он переносит его из RAM на жёсткий диск.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">29</span>
+        <span>localStorage — не шпионаж. Это персональный внешний диск.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Технический факт (W3C Web Storage, HTML Living Standard §5).
+        <strong>Что мы знаем:</strong> localStorage — per-origin хранилище в браузере пользователя, по умолчанию не отправляется на сервер; данные не зашифрованы; доступны любому JS-коду того же origin (потенциальная XSS-уязвимость).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Долговременную стабильность localStorage (браузеры могут очищать его); что происходит с данными при экспорте файла.
+        </div>
+        <div class="accordion-content">
+          Опыт, сохранённый в localStorage браузера, принадлежит телу, которое его произвело. Он не отправляется на сервер. Не анализируется. Не агрегируется. Но: данные не зашифрованы. Если ты экспортируешь файл или передаёшь его, опыт передаётся в открытом виде. Доверяй этому диску как личному дневнику, оставленному на столе.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">30</span>
+        <span>Архитектурная нотация — не доказательство. Это чертёж.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Архитектурная нотация, не формальная модель.
+        <strong>Что мы знаем:</strong> Символ ⊥ в математике означает «перпендикулярен» или «ортогонален», что не имеет очевидного смысла для процессов. bridge() — не определённая функция. δ и f не имеют объявленных доменов. Формула LC(H,F) — это псевдо-математическая нотация: выглядит как формула, но не имеет формального содержания.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Можно ли формализовать «щелчок» ансамбля математически так, чтобы формула получила семантику. На данный момент — нет.
+        </div>
+        <div class="accordion-content">
+          Формула LC(H,F) = bridge({Pi(δ) ⊥ Pj(f)}) описывает архитектуру схематически, но не доказывает её работу. Как чертёж дома не доказывает, что дом стоит. v18 честно признаёт: это архитектурная диаграмма, не математическая модель. Валидация происходит только когда живое тело проходит через устройство и фиксирует результат. Формула — карта, а не территория.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">31</span>
+        <span>Эстетика — это не украшение. Это соматический интерфейс.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Концептуальная основа:</strong> Affective design (Norman, 2004 «Emotional Design»); neuroaesthetics (Ramachandran & Hirstein, 1999); интероцепция (Craig, 2009).
+        <strong>Эмпирический статус:</strong> Дизайн-решение, основанное на исследованиях внимания; отдельные утверждения подтверждены эмпирически.
+        <strong>Что мы знаем:</strong> Шрифты с засечками замедляют чтение сложных текстов (Rayner et al., 2012; Larson, 2007). Тёмный фон снижает сенсорную перегрузку в иммерсивных интерфейсах, но оспаривается для длинных текстов (WCAG 2.1 контраст). Пауза в 3 секунды соответствует минимальному порогу интероцептивной регистрации (Craig, 2009).
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Оптимальные параметры для каждого конкретного ансамбля — они индивидуальны. Взаимодействие параметров в совокупности.
+        </div>
+        <div class="accordion-content">
+          Тёплый графит, шрифты с засечками, паузы между экранами — всё это не дизайн для красоты. Каждый визуальный элемент управляет вниманием тела: шрифт с засечками замедляет чтение, тёмный фон снижает сенсорную перегрузку, пауза в 3 секунды — минимальное время для соматического конфликта.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">32</span>
+        <span>prefers-reduced-motion — это не accessibility. Это структурное признание.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Технический стандарт (WCAG 2.1, W3C) + этическая позиция проекта.
+        <strong>Что мы знаем:</strong> Медиа-запрос отключает анимации для пользователей с вестибулярными расстройствами. Это факт.
+        <strong>Что мы <span class="unknown">НЕ знаем</span>:</strong> Является ли дискомфорт от анимации универсальным соматическим феноменом или исключительно клиническим.
+        </div>
+        <div class="accordion-content">
+          Если тело пользователя чувствительно к движению, все анимации отключаются. Это не «помощь инвалидам» — это признание того, что интерфейс не должен навязывать соматический ритм телу, которое его не запрашивает. Один и тот же файл ведёт себя иначе для разных тел. Это не уступка — это структурная честность.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAcc(this)">
+        <span class="num">33</span>
+        <span>Этот файл почти самодостаточен. С одной оговоркой.</span>
+        <span class="arrow">&#9656;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="epistemic-gap">
+          <span class="gap-title">Эпистемический статус</span>
+        <strong>Эмпирический статус:</strong> Технический факт (с одной оговоркой).
+        <strong>Что мы знаем:</strong> Весь HTML, CSS и JavaScript содержатся в одном файле. Нет серверных вызовов. Нет трекинга. Нет аналитики.
+        <strong>Оговорка:</strong> Шрифты загружаются из Google Fonts при первой загрузке. После кэширования файл работает автономно.
+        </div>
+        <div class="accordion-content">
+          Единственное, что требуется после начальной загрузки шрифтов — браузер и тело. Файл не звонит домой. Не собирает метрики. Не обновляется. Он существует как артефакт, который можно скопировать на флешку, передать другому телу, открыть через десять лет. С оговоркой: первые три шрифтовых файла — единственный мост во внешний мир, и он односторонний.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="manifest-footer">
+    <p class="mf-text">Один человек, закрывший глаза и указавший рукой — это полный успех проекта.</p>
+    <p class="mf-formula">LC(H, F) = bridge( { Pi(δ) ⊥ Pj(f) | Pi, Pj ∈ H, i ≠ j } )<br>subject to: LC ≠ Oracle · LC ≠ Screen · d(F) ≥ 1 · δ requires body</p>
+    <p class="mf-note">v18.1 · epistemic honesty layer · no server · no tracking<br>step 5 describing step 1 · awaits a body<br>every card carries its own uncertainty</p>
+  </div>
+</div>
+<script>
+var currentScreen = 0;
+function goTo(n) {
+  var cur = document.getElementById('screen' + currentScreen);
+  if (cur) cur.classList.remove('active');
+  var next = document.getElementById('screen' + n);
+  if (next) { next.classList.add('active'); if (n === 6) { document.body.style.overflow = 'hidden'; next.style.overflowY = 'auto'; } }
+  currentScreen = n;
+  if (n === 2) { setTimeout(function() { goTo(3); }, 3000); }
+  if (n === 3) { setTimeout(function() { goTo(4); }, 5000); }
+}
+function seal(silent) {
+  var echoArea = document.getElementById('echoArea');
+  var userText = document.getElementById('userText').value.trim();
+  var echo = document.createElement('div');
+  echo.className = 'user-text-echo';
+  if (!silent && userText.length > 0) { echo.textContent = userText; }
+  else { echo.textContent = 'Момент был. Он не получил слова.'; echo.style.opacity = '0.3'; }
+  echoArea.appendChild(echo);
+  try { var stored = JSON.parse(localStorage.getItem('lc_sealed') || '[]'); stored.push({card:'01',text:userText||null,silent:!!silent,ts:Date.now()}); localStorage.setItem('lc_sealed', JSON.stringify(stored)); } catch(e) {}
+  goTo(5);
+}
+function toggleAcc(btn) {
+  var item = btn.parentElement;
+  var wasOpen = item.classList.contains('open');
+  var items = document.querySelectorAll('.accordion-item');
+  for (var i = 0; i < items.length; i++) { items[i].classList.remove('open'); }
+  if (!wasOpen) { item.classList.add('open'); }
+}
+</script>
+</body>
+</html>
