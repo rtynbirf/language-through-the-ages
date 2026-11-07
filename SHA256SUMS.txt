@@ -1,3 +1,5 @@
 3b8556211eeab8a5b6309f5d46788909dd6c1fb87d8d1a32aa5e0dfaa18f155b  language-through-the-ages-v1.html
 c30ab945346aedd674581bb9fa8befffbdcc63fcbde00b099ab81e7e100a8a84  language-through-the-ages-v2.html
 efc2128f12ac51733b2d1cd71a807c3f9d741e728381b253d37a70da3494b894  language-through-the-ages.zip
+1ab11204c3b90449dc3ef8386651a573e89dd647a0cbac3a74a2b33f1bfa6fbd  linguistic-code-epochs-v1.html
+3c60b9e4a50c1e889dd7357df1d5e6ec2a7ed6918994e1b91820e24833fc73cf  linguistic-code-epochs-v1.zip
