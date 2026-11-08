@@ -1,0 +1,35 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  exposition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Экспозиция-гейты (автономность, размер, целостность)
+        run: |
+          python3 - <<'PY'
+          import glob, os, re, sys
+          htmls = sorted(glob.glob('**/*.html', recursive=True))
+          if not htmls:
+              sys.exit('HTML-файлов не найдено — экспозиция пуста')
+          bad_ext, big = [], []
+          for p in htmls:
+              s = open(p, encoding='utf-8', errors='replace').read()
+              size = os.path.getsize(p)
+              if size > 3_000_000:
+                  big.append(f'{p}: {size//1024} КБ > 3000 КБ')
+              for m in re.findall(r'(?:src|href)\s*=\s*["\'](https?://[^"\']+)', s, re.I):
+                  if not re.search(r'(?:w3\.org|example\.com)', m):
+                      bad_ext.append(f'{p}: {m[:90]}')
+          if big: sys.exit('size budget: ' + '; '.join(big))
+          if bad_ext: sys.exit('внешние запросы: ' + '; '.join(bad_ext[:5]))
+          print(f'OK: {len(htmls)} html, внешних запросов 0, бюджеты соблюдены')
+          PY
