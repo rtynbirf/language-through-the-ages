@@ -1,0 +1,36 @@
+# language-through-the-ages
+> Язык сквозь эпохи — автономная HTML-экспозиция: семь способов мыслить язык (7 эпох × 7 гарнитур, эпистемические комментарии)
+
+Автоген 2026-11-08 · источник: живой GitHub API (номера и файлы не руками) · владелец rtynbirf · ветка `main`
+
+## Мембрана
+- README.md — для человека (Язык сквозь эпохи)
+- AGENTS.md — есть
+- LICENSE — CC-BY-4.0
+- topics: dark-theme, essay, exposition, html, linguistics, offline-first, single-file, typography
+
+## Карта корня
+- .github/
+- .gitignore
+- AGENTS.md
+- CODEOWNERS
+- LICENSE
+- README.md
+- SECURITY.md
+- SHA256SUMS.txt
+- build/
+- language-through-the-ages-v1.html
+- language-through-the-ages-v2.html
+- language-through-the-ages.zip
+- linguistic-code-epochs-v1.html
+- linguistic-code-epochs-v1.zip
+- linguistic-code-v18.1-hybrid.html
+- … ещё 1
+
+## CI
+- workflow: ci
+
+## Ссылки
+- [GitHub](https://github.com/rtynbirf/language-through-the-ages)
+- [README](https://github.com/rtynbirf/language-through-the-ages/blob/main/README.md)
+- [raw llms.txt](https://raw.githubusercontent.com/rtynbirf/language-through-the-ages/main/llms.txt)
