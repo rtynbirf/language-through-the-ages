@@ -33,3 +33,29 @@ jobs:
           if bad_ext: sys.exit('внешние запросы: ' + '; '.join(bad_ext[:5]))
           print(f'OK: {len(htmls)} html, внешних запросов 0, бюджеты соблюдены')
           PY
+
+  data-build:
+    # ПРЕДЛОЖЕНИЕ-41 (issue #3): эпохи как данные — data/epochs.json →
+    # детерминированная сборка HTML/MD (stdlib-only). Приёмка машинная:
+    # двойная сборка подряд = байт-идентичные артефакты; SHA256SUMS
+    # пересчитан и совпадает; подвал страницы = пломба == манифест.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Гейт docs-drift — закоммиченные артефакты == пересборка
+        run: python3 build/build_epochs_from_json.py --check
+
+      - name: Selftest — двойная сборка байт-идентична, SHA256SUMS и пломба-манифест сходятся
+        run: python3 build/selftest_epochs.py
+
+      - name: Память прогона — артефакты сборки
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v4
+        with:
+          name: epochs-v2-${{ github.run_id }}
+          path: |
+            linguistic-code-epochs-v2.html
+            linguistic-code-epochs-v2.md
+          if-no-files-found: error
