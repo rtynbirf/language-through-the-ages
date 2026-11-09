@@ -34,3 +34,4 @@
 - [GitHub](https://github.com/rtynbirf/language-through-the-ages)
 - [README](https://github.com/rtynbirf/language-through-the-ages/blob/main/README.md)
 - [raw llms.txt](https://raw.githubusercontent.com/rtynbirf/language-through-the-ages/main/llms.txt)
+- [PULSE.md](PULSE.md): живой пульс репозитория — прогоны, пломбы, здоровье.
