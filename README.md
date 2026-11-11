@@ -2,6 +2,15 @@
   <img src="banner.png" alt="language-through-the-ages — Автономная HTML-экспозиция: язык сквозь эпохи" width="100%">
 </div>
 
+<!--ФОРЖ:МУЗА:НАЧАЛО-->
+<div align="center">
+  <img src="repo-muse.svg" width="100%" alt="Муза language-through-the-ages: картина кузни ПОЛИМАТ, раунд 9" />
+  <br/>
+  <img src="forge-divider.svg" width="62%" alt="разделитель кузни ПОЛИМАТ" />
+</div>
+<!--ФОРЖ:МУЗА:КОНЕЦ-->
+
+
 # Язык сквозь эпохи
 
 Автономная HTML-экспозиция: семь способов мыслить язык — от логоса к телесному предсказанию.
@@ -109,3 +118,10 @@ I Голос (песнь) → II Логос (λόγος) → III Знак (scrip
   в v18.2;
 - **Пломба:** `sha256sum -c SHA256SUMS.txt`; резерв —
   `linguistic-code-v18.1-hybrid.zip` (deflate -9).
+
+<!--ФОРЖ:ПОДВАЛ-->
+---
+
+<div align="center">
+  <sub>◆ картина и штандарт — ручная ковка <a href="https://github.com/rtynbirf">КУЗНИ ПОЛИМАТ</a> · ЧЕЛОВЕК=АККАУНТ=PID1 ◆</sub>
+</div>
