@@ -1,18 +1,18 @@
 <div align="center">
-  <img src="banner.png" alt="language-through-the-ages — Автономная HTML-экспозиция: язык сквозь эпохи" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/banner.png" alt="language-through-the-ages — Автономная HTML-экспозиция: язык сквозь эпохи" width="100%">
 </div>
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
 <div align="center">
-  <img src="repo-muse.svg" width="100%" alt="Муза language-through-the-ages: мастерская ВАВИЛОН · СТРОКИ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/repo-muse.svg" width="100%" alt="Муза language-through-the-ages: мастерская ВАВИЛОН · СТРОКИ, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
   <br/>
-  <img src="forge-divider.svg" width="62%" alt="делитель мастерской ВАВИЛОН · СТРОКИ" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/forge-divider.svg" width="62%" alt="делитель мастерской ВАВИЛОН · СТРОКИ" />
 </div>
 <!--ФОРЖ:МУЗА:КОНЕЦ-->
 
 <!--ФОРЖ:ПАСПОРТ:НАЧАЛО-->
 <div align="center">
-  <img src="revo-page.svg" width="100%" alt="РЕВО-паспорт страницы language-through-the-ages: строение файлов, лексикон, числа — по фактическому контенту" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/revo-page.svg" width="100%" alt="РЕВО-паспорт страницы language-through-the-ages: строение файлов, лексикон, числа — по фактическому контенту" />
 </div>
 
 | ФАЙЛОВ | ПАПОК | КОММИТОВ | ОБНОВЛЕНО | РЕЛИЗОВ |
