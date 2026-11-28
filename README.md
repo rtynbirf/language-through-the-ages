@@ -1,5 +1,7 @@
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/banner.png" alt="language-through-the-ages — Автономная HTML-экспозиция: язык сквозь эпохи" width="100%">
+
+<a href="https://github.com/rtynbirf/language-through-the-ages"><img src="banner.png" width="100%" alt="language-through-the-ages — штандарт мастерской в каноне ORNAMENTAL MYTHO-REALISM"></a>
+
 </div>
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
@@ -12,13 +14,25 @@
 
 <!--ФОРЖ:ПАСПОРТ:НАЧАЛО-->
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/revo-page.svg" width="100%" alt="РЕВО-паспорт страницы language-through-the-ages: строение файлов, лексикон, числа — по фактическому контенту" />
+  <img src="revo-page.svg" width="100%" alt="РЕВО-паспорт страницы language-through-the-ages №33 в каноне ORNAMENTAL MYTHO-REALISM: орнаментальная решётка, медальон-миф, строение файлов, лексикон — по фактическому контенту" />
 </div>
 
 | ФАЙЛОВ | ПАПОК | КОММИТОВ | ОБНОВЛЕНО | РЕЛИЗОВ |
 |---:|---:|---:|---|---:|
-| 38 | 4 | 46 | 2026-11-16 | 1 |
+| 48 | 6 | 1 | 2026-11-28 | 1 |
 <!--ФОРЖ:ПАСПОРТ:КОНЕЦ-->
+
+# language-through-the-ages
+
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/.github/social-preview.png" alt="language-through-the-ages" width="100%"></p>
+
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/banner.png" alt="language-through-the-ages — Автономная HTML-экспозиция: язык сквозь эпохи" width="100%">
+</div>
+
+
+
+
 
 
 
