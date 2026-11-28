@@ -24,6 +24,18 @@
 
 # language-through-the-ages
 
+<div align="center">
+
+<a href="https://github.com/rtynbirf/language-through-the-ages"><img src="banner.png" width="100%" alt="language-through-the-ages — штандарт мастерской в каноне ORNAMENTAL MYTHO-REALISM"></a>
+
+</div>
+
+
+
+
+
+# language-through-the-ages
+
 <p align="center"><img src="https://cdn.jsdelivr.net/gh/rtynbirf/language-through-the-ages@main/.github/social-preview.png" alt="language-through-the-ages" width="100%"></p>
 
 <div align="center">
